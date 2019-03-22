@@ -1,4 +1,4 @@
-package com.circleci.demojavaspring;
+package com.rso;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @ContextConfiguration
 @TestPropertySource("/test.properties")
-public class DemoJavaSpringApplicationTests {
+public class DeployTests {
 
 	@Test
 	public void contextLoads() {

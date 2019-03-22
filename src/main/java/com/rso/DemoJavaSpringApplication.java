@@ -1,4 +1,4 @@
-package com.circleci.demojavaspring;
+package com.rso;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

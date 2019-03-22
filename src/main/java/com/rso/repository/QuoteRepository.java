@@ -1,8 +1,8 @@
-package com.circleci.demojavaspring.repository;
+package com.rso.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.circleci.demojavaspring.model.Quote;
+import com.rso.model.Quote;
 
 public interface QuoteRepository extends CrudRepository<Quote, Long> {
 
