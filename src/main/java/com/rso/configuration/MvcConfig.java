@@ -1,4 +1,4 @@
-package com.circleci.demojavaspring.configuration;
+package com.rso.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

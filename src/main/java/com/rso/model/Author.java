@@ -1,4 +1,4 @@
-package com.circleci.demojavaspring.model;
+package com.rso.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
