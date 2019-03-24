@@ -4,12 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<properties>
-		<projectVersion>0.0.1.2</projectVersion>
+		<projectVersion>0.0.2</projectVersion>
 		<projectSuffix>-SNAPSHOT</projectSuffix>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>springio</docker.image.prefix>
 		<repositoryUri>261060041830.dkr.ecr.eu-central-1.amazonaws.com/testdeploy</repositoryUri>
 	</properties>
 
