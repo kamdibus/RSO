@@ -10,7 +10,7 @@ jobs: # a collection of steps
     steps: # a collection of executable commands
 
       - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
-      - run: apk add maven -y
+      - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
 
       - checkout # check out source code to working directory
 
