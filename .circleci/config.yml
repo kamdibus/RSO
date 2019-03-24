@@ -32,7 +32,7 @@ jobs:
           path: target/testDeploy-0.0.1-SNAPSHOT.jar
       - persist_to_workspace:
           root: *workspace_root
-          paths: /root/testDeploy
+          paths: ../../root/testDeploy
   deploy:
     working_directory: ~/testDeploy
     docker:
