@@ -30,9 +30,12 @@ jobs:
           path: target/surefire-reports
       - store_artifacts:
           path: target/testDeploy-0.0.1-SNAPSHOT.jar
+      - run:
+          name: Copy to workspace
+          command: mv . /tmp/workspace
       - persist_to_workspace:
           root: *workspace_root
-          paths: ../../root/testDeploy
+          paths: .
   deploy:
     working_directory: ~/testDeploy
     docker:
