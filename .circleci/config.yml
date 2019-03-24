@@ -22,7 +22,13 @@ jobs:
       - store_artifacts:
           path: target/testDeploy-0.0.1-SNAPSHOT.jar
   deploy:
+    working_directory: ~/testDeploy
+    docker:
+      - image: docker:18.06.3-ce-git
     steps:
+      - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
+      - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
+      - setup_remote_docker
       - run: mvn -B -s settings.xml deploy
 
 workflows:
