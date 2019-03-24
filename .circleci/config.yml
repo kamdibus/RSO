@@ -1,33 +1,32 @@
-workflows:
-  version: 2
-  jobs:
-      - build:
-          working_directory: ~/testDeploy
-          docker:
-            - image: docker:18.06.3-ce-git
-          steps:
-            - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
-            - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
-            - checkout
-            - setup_remote_docker
-            - restore_cache:
-                key: testDeploy-{{ checksum "pom.xml" }}
-            - run: mvn -B dependency:go-offline
-            - save_cache:
-                paths:
-                  - ~/.m2
-                key: testDeploy-{{ checksum "pom.xml" }}
-            - run: mvn -B -s settings.xml install
-            - store_test_results:
-                path: target/surefire-reports
-            - store_artifacts:
-                path: target/testDeploy-0.0.1-SNAPSHOT.jar
-      - deploy:
-          filters:
-            branches:
-              only:
-                - development
-                - master
-                - /testDeploy*/
-          steps:
-            - run: mvn -B -s settings.xml deploy
+version: 2
+jobs:
+  - build:
+      working_directory: ~/testDeploy
+      docker:
+        - image: docker:18.06.3-ce-git
+      steps:
+        - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
+        - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
+        - checkout
+        - setup_remote_docker
+        - restore_cache:
+            key: testDeploy-{{ checksum "pom.xml" }}
+        - run: mvn -B dependency:go-offline
+        - save_cache:
+            paths:
+              - ~/.m2
+            key: testDeploy-{{ checksum "pom.xml" }}
+        - run: mvn -B -s settings.xml install
+        - store_test_results:
+            path: target/surefire-reports
+        - store_artifacts:
+            path: target/testDeploy-0.0.1-SNAPSHOT.jar
+  - deploy:
+      filters:
+        branches:
+          only:
+            - development
+            - master
+            - /testDeploy*/
+      steps:
+        - run: mvn -B -s settings.xml deploy
