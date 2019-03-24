@@ -1,7 +1,6 @@
 workflows:
   version: 2
-  build-test-deploy:
-    jobs:
+  jobs:
       - build:
           working_directory: ~/testDeploy
           docker:
