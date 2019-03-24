@@ -33,5 +33,5 @@ workflows:
                 - development
                 - master
                 - /testDeploy*/
-                steps:
-                  - run: mvn -B -s settings.xml deploy
+          steps:
+            - run: mvn -B -s settings.xml deploy
