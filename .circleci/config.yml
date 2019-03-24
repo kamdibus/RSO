@@ -5,25 +5,29 @@ jobs: # a collection of steps
     working_directory: ~/testDeploy # directory where steps will run
 
     docker: # run the steps with Docker
-      - image: circleci/openjdk # ...with this image as the primary container; this is where all `steps` will run
-
+#      - image: circleci/openjdk # ...with this image as the primary container; this is where all `steps` will run
+      - image: docker:18.06.3-ce-git
     steps: # a collection of executable commands
 
+      - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
+      - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
+
       - checkout # check out source code to working directory
+      - setup_remote_docker
 
       - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: testDeploy-{{ checksum "pom.xml" }}
       
-      - run: mvn dependency:go-offline # gets the project dependencies
+      - run: mvn -B dependency:go-offline # gets the project dependencies
       
       - save_cache: # saves the project dependencies
           paths:
             - ~/.m2
           key: testDeploy-{{ checksum "pom.xml" }}
       
-      - run: mvn package # run the actual tests
-      
+      - run: mvn -B -s settings.xml deploy # run the actual tests
+
       - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard. 
       # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: target/surefire-reports
