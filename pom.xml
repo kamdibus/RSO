@@ -98,7 +98,7 @@
 				<configuration>
 					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
 					<repository>${repositoryUri}</repository>
-					<tag>${project.version}</tag>
+					<tag>0.0.1</tag>
 					<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
