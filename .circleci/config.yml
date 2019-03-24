@@ -39,9 +39,9 @@ workflows:
       - deploy:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - development
-                - master
-                - /testDeploy*/
+#          filters:
+#            branches:
+#              only:
+#                - development
+#                - master
+#                - /testDeploy*/
