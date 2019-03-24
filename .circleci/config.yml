@@ -1,10 +1,19 @@
 version: 2
+
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 jobs:
   build:
     working_directory: ~/testDeploy
     docker:
       - image: docker:18.06.3-ce-git
     steps:
+      - *attach_workspace
       - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
       - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
       - checkout
@@ -22,15 +31,14 @@ jobs:
       - store_artifacts:
           path: target/testDeploy-0.0.1-SNAPSHOT.jar
       - persist_to_workspace:
-          root: testDeploy
+          root: *workspace_root
           paths: .
   deploy:
     working_directory: ~/testDeploy
     docker:
       - image: docker:18.06.3-ce-git
     steps:
-      - attach_workspace:
-          at: /tmp/testDeploy
+      - *attach_workspace
       - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
       - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
       - setup_remote_docker
