@@ -22,7 +22,7 @@
     <description>test developer environment</description>
 
     <artifactId>testDeploy</artifactId>
-    <version>${projectVersion}${projectSuffix}</version>
+    <version>${revision}</version>
     <packaging>jar</packaging>
 
     <dependencies>

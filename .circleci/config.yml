@@ -14,8 +14,6 @@ jobs:
       - image: rsoprojectwut/cibuild:0.0.1
     steps:
       - *attach_workspace
-#      - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
-#      - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
       - checkout
       - setup_remote_docker
       - restore_cache:
@@ -45,10 +43,8 @@ jobs:
       - run:
           name: Copy workspace
           command: mv /tmp/workspace/* .
-#      - run: apk update -y && apk upgrade && apk add --no-cache nss && apk add --no-cache openjdk8
-#      - run: DOCKER_HOST=unix:///var/run/docker-real.sock && apk add maven -y
       - setup_remote_docker
-      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push
+      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push --projects testDeploy
 
 workflows:
   version: 2
