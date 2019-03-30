@@ -11,7 +11,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>testDeploy</artifactId>
+    <artifactId>consumerService</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
 
@@ -96,7 +96,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
-                    <repository>rsoprojectwut/testdeploy</repository>
+                    <repository>rsoprojectwut/comsumerservice</repository>
                 </configuration>
             </plugin>
             <plugin>

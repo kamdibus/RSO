@@ -6,13 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demo-java-spring" />
+        <module name="consumerService" />
         <module name="testDeploy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
-      <module name="testDeploy" target="1.8" />
+      <module name="consumerService" target="1.5" />
+      <module name="testDeploy" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
