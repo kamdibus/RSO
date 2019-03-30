@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="demo-java-spring" target="1.8" />
+      <module name="app" target="1.8" />
       <module name="testDeploy" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -3,27 +3,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <groupId>com.rso</groupId>
     <artifactId>app</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <properties>
-        <revision>0.0.2-SNAPSHOT</revision>
-    </properties>
-
     <modules>
         <module>testDeploy</module>
     </modules>
 
+    <properties>
+        <revision>0.0.2-SNAPSHOT</revision>
+        <projectVersion>0.0.2</projectVersion>
+        <java.version>1.8</java.version>
+        <repositoryUri>261060041830.dkr.ecr.eu-central-1.amazonaws.com/testdeploy</repositoryUri>
+
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <junit.version>4.12</junit.version>
+        <spring-test.version>5.0.7.RELEASE</spring-test.version>
+        <spring-boot-test.version>2.0.3.RELEASE</spring-boot-test.version>
+        <h2.version>1.4.194</h2.version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
+        <webjarsBootstrap.version>3.3.7</webjarsBootstrap.version>
+        <spring-boot-starter.version>2.1.3.RELEASE</spring-boot-starter.version>
+    </properties>
+
     <build>
+        <pluginManagement></pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -35,5 +41,82 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles></profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-test</artifactId>
+                <version>${spring-boot-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot-starter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <optional>true</optional>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${webjarsBootstrap.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
