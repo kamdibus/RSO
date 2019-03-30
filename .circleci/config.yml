@@ -9,7 +9,7 @@ references:
 
 jobs:
   build:
-    working_directory: ~/testDeploy
+    working_directory: ~/app
     docker:
       - image: rsoprojectwut/cibuild:0.0.1
     steps:
@@ -17,17 +17,17 @@ jobs:
       - checkout
       - setup_remote_docker
       - restore_cache:
-          key: testDeploy-{{ checksum "pom.xml" }}
+          key: app-{{ checksum "pom.xml" }}
       - run: mvn -B dependency:go-offline
       - save_cache:
           paths:
             - ~/.m2
-          key: testDeploy-{{ checksum "pom.xml" }}
+          key: app-{{ checksum "pom.xml" }}
       - run: mvn -B -s settings.xml install
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
-          path: target/testDeploy-0.0.1-SNAPSHOT.jar
+          path: target/app-0.0.1-SNAPSHOT.jar
       - run:
           name: Copy to workspace
           command: mv ./* /tmp/workspace
@@ -35,7 +35,7 @@ jobs:
           root: *workspace_root
           paths: .
   deploy:
-    working_directory: ~/testDeploy
+    working_directory: ~/app
     docker:
       - image: rsoprojectwut/cibuild:0.0.1
     steps:
@@ -44,7 +44,7 @@ jobs:
           name: Copy workspace
           command: mv /tmp/workspace/* .
       - setup_remote_docker
-      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push --projects testDeploy #add all deployed modules here as a list
+      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push --projects testDeploy,consumerService #add all deployed modules here as a list
 
 workflows:
   version: 2
