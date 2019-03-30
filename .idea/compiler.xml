@@ -12,8 +12,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
-      <module name="consumerService" target="1.8" />
-      <module name="testDeploy" target="1.8" />
+      <module name="consumerService" target="1.5" />
+      <module name="testDeploy" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -11,9 +11,6 @@
         <version>${revision}</version>
     </parent>
 
-    <name>consumerService</name>
-    <description></description>
-
     <artifactId>consumerService</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
@@ -90,8 +87,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.rso.DemoJavaSpringApplication</mainClass>
                         </manifest>
                     </archive>
@@ -100,40 +95,12 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.3.6</version>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>push</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
-                    <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                     <repository>rsoprojectwut/comsumerservice</repository>
-                    <tag>${projectVersion}</tag>
-                    <buildArgs>
-                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                    </buildArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <overWriteReleases>false</overWriteReleases>
-                            <includeScope>runtime</includeScope>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
