@@ -7,6 +7,6 @@ Project handles authentication and authorization (user sessions and permissions)
 ## Architecture
 Automatically scaled Kubernetes cluster deployed on AWS ECS
 
-##CI
+## CI
 CI server handles automatic build-test-deploy workflows from master, development and testDeploy* branches
 
