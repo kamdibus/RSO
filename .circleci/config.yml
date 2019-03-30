@@ -44,7 +44,7 @@ jobs:
           name: Copy workspace
           command: mv /tmp/workspace/* .
       - setup_remote_docker
-      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push --projects "testDeploy consumerService" #add all deployed modules here as a list
+      - run: mvn -B -s settings.xml dockerfile:build dockerfile:push --projects testDeploy,consumerService #add all deployed modules here as a list
 
 workflows:
   version: 2
