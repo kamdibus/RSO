@@ -1,8 +1,9 @@
 package com.rso.repository;
 
-import com.rso.model.Author;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface AuthorRepository extends CrudRepository<Author, Long> {
+import com.rso.model.Author;
+
+public interface AuthorRepository extends MongoRepository<Author, Long> {
     
 }
