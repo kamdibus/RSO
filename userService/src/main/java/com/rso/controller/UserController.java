@@ -1,20 +1,21 @@
 package com.rso.controller;
 
-import com.rso.util.CookieUtil;
 import com.rso.form.LoginForm;
 import com.rso.form.UserForm;
 import com.rso.model.User;
 import com.rso.service.UserService;
+import com.rso.util.CookieUtil;
 import com.rso.util.JwtUtil;
 import com.rso.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -39,7 +40,7 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid LoginForm loginForm, BindingResult bindingResult, HttpServletResponse httpServletResponse){
         User user = userService.findByUsername(loginForm.getUsername());
-        if (user == null || user.getPassword() != loginForm.getPassword()){
+        if (user == null || !user.getPassword().equals(loginForm.getPassword())){
             System.out.println("elo");
         }
         String token = JwtUtil.generateToken(signingKey, user.getUsername());

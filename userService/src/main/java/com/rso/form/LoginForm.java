@@ -5,11 +5,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 public class LoginForm {
-    @NotEmpty(message = "This field is required")
     @Size(min=5)
     private String username;
 
-    @NotEmpty(message = "This field is required")
     @Size(min=5)
     private String password;
 

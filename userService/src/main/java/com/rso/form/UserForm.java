@@ -1,28 +1,20 @@
 package com.rso.form;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.constraints.Size;
 
 public class UserForm {
-    @NotEmpty(message = "This field is required")
     @Size(min=5)
     private String username;
 
-    @NotEmpty(message = "This field is required")
     @Size(min=5)
     private String password;
 
-    @NotEmpty(message = "This field is required")
     @Size(min=5)
     private String passwordConfirmation;
 
-    @NotEmpty(message = "This field is required")
-    @Email
-    public String email;
+    private String email;
 
-    public Long role;
+    private Long role;
 
     public String getUsername(){
         return this.username;

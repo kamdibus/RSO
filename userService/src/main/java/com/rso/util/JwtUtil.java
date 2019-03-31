@@ -1,6 +1,5 @@
 package com.rso.util;
 
-import com.rso.util.CookieUtil;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
