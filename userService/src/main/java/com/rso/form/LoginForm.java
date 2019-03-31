@@ -1,7 +1,5 @@
 package com.rso.form;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.constraints.Size;
 
 public class LoginForm {
