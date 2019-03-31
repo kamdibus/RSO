@@ -17,9 +17,9 @@ public class PaymentDatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        this.paymentRepository.save(new Payment(1));
-        this.paymentRepository.save(new Payment(2));
-        this.paymentRepository.save(new Payment(3));
-        this.paymentRepository.save(new Payment(4));
+        this.paymentRepository.save(new Payment(10));
+        this.paymentRepository.save(new Payment(20));
+        this.paymentRepository.save(new Payment(30));
+        this.paymentRepository.save(new Payment(40));
     }
 }

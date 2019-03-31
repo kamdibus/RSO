@@ -13,9 +13,12 @@ public class Payment {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
+    private float amount;
+
+    public Payment(final float amount) {
+        this.amount = amount;
+    }
+
     public Payment() {}
 
-    public Payment(final long id) {
-        this.id = id;
-    }
 }
