@@ -1,9 +1,12 @@
 package com.rso.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "role")
 public class Role {
     @Id
