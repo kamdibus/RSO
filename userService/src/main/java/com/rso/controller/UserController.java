@@ -41,7 +41,7 @@ public class UserController {
     public ResponseEntity login(@RequestBody @Valid LoginForm loginForm, BindingResult bindingResult, HttpServletResponse httpServletResponse){
         User user = userService.findByUsername(loginForm.getUsername());
         if (user == null || !user.getPassword().equals(loginForm.getPassword())){
-            System.out.println("elo");
+            return ResponseEntity.ok("Wrong username or password");
         }
         String token = JwtUtil.generateToken(signingKey, user.getUsername());
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
