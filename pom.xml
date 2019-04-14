@@ -11,6 +11,7 @@
     <modules>
         <module>testDeploy</module>
         <module>consumerService</module>
+        <module>userService</module>
     </modules>
 
     <properties>
@@ -34,6 +35,10 @@
         <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+        <lombok.version>1.16.22</lombok.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <spring-boot-starter-security.version>2.1.4.RELEASE</spring-boot-starter-security.version>
+        <spring.version>5.0.6.RELEASE</spring.version>
     </properties>
 
     <build>
@@ -186,6 +191,16 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-starter-security.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
