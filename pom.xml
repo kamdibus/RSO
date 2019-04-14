@@ -12,6 +12,7 @@
         <module>testDeploy</module>
         <module>consumerService</module>
         <module>userService</module>
+        <module>frontendService</module>
     </modules>
 
     <properties>
