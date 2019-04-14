@@ -6,6 +6,7 @@ import com.rso.model.User;
 import com.rso.repository.RoleRepository;
 import com.rso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -18,10 +19,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public User save(UserForm userForm) {
         User user = new User(
-                userForm.getUsername(), userForm.getPassword(), userForm.getEmail()
+                userForm.getUsername(), bCryptPasswordEncoder.encode(userForm.getPassword()), userForm.getEmail()
         );
         user.setRoles((Set<Role>) roleRepository.findById(userForm.getRole()));
         userRepository.save(user);

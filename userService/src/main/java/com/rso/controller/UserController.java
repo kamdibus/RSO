@@ -9,6 +9,7 @@ import com.rso.util.JwtUtil;
 import com.rso.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,9 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private static final String jwtTokenCookieName = "JWT-TOKEN";
     private static final String signingKey = "signingKey";
 
@@ -40,7 +44,7 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid LoginForm loginForm, BindingResult bindingResult, HttpServletResponse httpServletResponse){
         User user = userService.findByUsername(loginForm.getUsername());
-        if (user == null || !user.getPassword().equals(loginForm.getPassword())){
+        if (user == null || ! bCryptPasswordEncoder.matches(loginForm.getPassword(), user.getPassword())){
             return ResponseEntity.ok("Wrong username or password");
         }
         String token = JwtUtil.generateToken(signingKey, user.getUsername());
