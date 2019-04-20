@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(path="/quote")
 public class QuoteController {
-    @Autowired
 
-    private AuthorRepository authorRepository;
+    @Autowired
     private QuoteRepository quoteRepository;
 
     @GetMapping(path="/add")
     public @ResponseBody String addNewQuote (@RequestParam String quote) {
         Quote q = new Quote();
         q.setQuote("New Quote");
-        quoteRepository.save(q);
+        quoteRepository.insert(q);
         return "Saved";
     }
 }

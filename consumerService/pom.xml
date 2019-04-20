@@ -100,7 +100,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
-                    <repository>rsoprojectwut/comsumerservice</repository>
+                    <repository>rsoprojectwut/consumerservice</repository>
                 </configuration>
             </plugin>
             <plugin>

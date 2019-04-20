@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment                                          # 1
+metadata:
+  name: testdeploy
+spec:
+  replicas: 2                                             # 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate                                   # 3
+    rollingUpdate:
+      maxUnavailable: 1                                   # 4
+      maxSurge: 1                                         # 5
+  template:                                               # 6
+    metadata:
+      labels:
+        app: testdeploy                                  # 7
+    spec:
+      containers:
+        - image: rsoprojectwut/testdeploy
+          imagePullPolicy: IfNotPresent                         # 8
+          name: testdeploy-pod
+          ports:
+            - containerPort: 80
