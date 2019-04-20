@@ -14,7 +14,6 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <repositoryUri>261060041830.dkr.ecr.eu-central-1.amazonaws.com/testdeploy</repositoryUri>
 
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <junit.version>4.12</junit.version>
