@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: userservice
-        image: rsoprojectwut/userservice:0.0.2
+        image: rsoprojectwut/userservice
         ports:
         - containerPort: 8080
         livenessProbe:
