@@ -11,7 +11,7 @@ jobs:
   build:
     working_directory: ~/app
     docker:
-      - image: rsoprojectwut/cibuild:0.0.1
+      - image: rsoprojectwut/cibuild
     steps:
       - *attach_workspace
       - checkout

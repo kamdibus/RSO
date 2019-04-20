@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: extensions/v1beta1
 kind: Deployment                                          # 1
 metadata:
   name: testdeploy
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - image: rsoprojectwut/testdeploy
-          imagePullPolicy: Always                         # 8
+          imagePullPolicy: IfNotPresent                         # 8
           name: testdeploy-pod
           ports:
             - containerPort: 80

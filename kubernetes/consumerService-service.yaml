@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: consumerservice
-        image: rsoprojectwut/consumerservice:0.0.2
+        image: rsoprojectwut/consumerservice
         ports:
         - containerPort: 8080
         livenessProbe:
