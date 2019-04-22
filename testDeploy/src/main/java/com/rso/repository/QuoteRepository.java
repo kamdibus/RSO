@@ -1,9 +1,8 @@
 package com.rso.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 import com.rso.model.Quote;
+import org.springframework.data.repository.CrudRepository;
 
-public interface QuoteRepository extends MongoRepository<Quote, Long> {
+public interface QuoteRepository extends CrudRepository<Quote, Long> {
 
 }
