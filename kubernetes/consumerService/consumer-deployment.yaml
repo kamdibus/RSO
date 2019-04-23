@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: testdeploy
+  name: consumer
 spec:
   replicas: 2
   minReadySeconds: 15
@@ -13,14 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: testdeploy
+        app: consumer
     spec:
       containers:
-        - image: rsoprojectwut/testdeploy
+        - image: rsoprojectwut/consumerservice
           imagePullPolicy: IfNotPresent
-          name: testdeploy-pod
-          env:
-            - name: CONSUMER_API_URL
-              value: "http://consumerservice-pod"
+          name: consumer-pod
           ports:
             - containerPort: 8080
