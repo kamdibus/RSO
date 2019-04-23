@@ -16,7 +16,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<frontend.srcdir>${project.basedir}/src/main/frontend</frontend.srcdir>
-		<frontend-maven-plugin.version>1.7.5</frontend-maven-plugin.version>
 		<maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
 		<node.version>v10.15.3</node.version>
 		<npm.version>6.4.1</npm.version>
@@ -39,51 +38,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${frontend-maven-plugin.version}</version>
-				<executions>
-
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						
-						<configuration>
-							<!-- See https://nodejs.org/en/download/ for latest node and npm (lts) versions -->
-							<nodeVersion>${node.version}</nodeVersion>
-							<npmVersion>${npm.version}</npmVersion>
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-
-				</executions>
-				<configuration>
-					<workingDirectory>${frontend.srcdir}</workingDirectory>
-        			<installDirectory>target</installDirectory>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
