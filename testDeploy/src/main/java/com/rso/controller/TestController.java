@@ -21,7 +21,7 @@ public class TestController {
     PaymentDto getPayment(@RequestParam int id) {
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("consumerApiUrl is = " + consumerApiUrl);
-        return restTemplate.getForEntity(consumerApiUrl + "consumer/payment/" + id,
+        return restTemplate.getForEntity(consumerApiUrl + "/consumer/payment/" + id,
                 PaymentDto.class)
                 .getBody();
     }
@@ -29,7 +29,7 @@ public class TestController {
     @GetMapping(path="/test")
     public @ResponseBody
     String test() {
-        return "Test consumer get endpoint";
+        return "Test consumer get endpoint v1";
     }
 
 }

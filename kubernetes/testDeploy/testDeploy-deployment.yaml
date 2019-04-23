@@ -21,6 +21,6 @@ spec:
           name: testdeploy-pod
           env:
             - name: CONSUMER_API_URL
-              value: "http://consumerservice-pod"
+              value: "http://consumer"
           ports:
             - containerPort: 8080
