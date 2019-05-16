@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <properties></properties>
+    <properties/>
 
     <parent>
         <groupId>com.rso</groupId>
@@ -11,7 +11,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>consumerService</artifactId>
+    <artifactId>invoiceService</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
 
@@ -100,7 +100,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
-                    <repository>rsoprojectwut/comsumerservice</repository>
+                    <repository>rsoprojectwut/invoiceservice</repository>
                 </configuration>
             </plugin>
             <plugin>

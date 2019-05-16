@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="consumerService" />
         <module name="testDeploy" />
+        <module name="invoiceService" />
+        <module name="consumerService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
       <module name="consumerService" target="1.8" />
+      <module name="invoiceService" target="1.8" />
       <module name="testDeploy" target="1.8" />
     </bytecodeTargetLevel>
   </component>

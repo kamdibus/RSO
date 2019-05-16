@@ -10,6 +10,7 @@
 
     <modules>
         <module>testDeploy</module>
+        <module>invoiceService</module>
         <module>consumerService</module>
     </modules>
 
