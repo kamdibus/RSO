@@ -4,7 +4,10 @@ import { PageHeader } from '../Layout/PageHeader';
 import { PureLink } from '../common/PureLink';
 import { BreadCrumb } from '../common/BreadCrumb';
 import { TopHeader } from '../Layout/TopHeader';
-import { DataSection } from './DataSection';
+import { Route } from 'react-router-dom';
+import { OfferEdit } from './OfferEdit';
+import { ActionRow } from '../Layout/ActionRow';
+import { Action } from '../Layout/Action';
 
 export class ConsumerView extends React.Component {
   render() {
@@ -17,11 +20,15 @@ export class ConsumerView extends React.Component {
           </BreadCrumb>
         </TopHeader>
         <PageHeader>
-          <BreadCrumb first={true}>
+          <BreadCrumb first={true} Container={props => <PureLink to='/consumer' {...props} />}>
             Consumer
           </BreadCrumb>
+          <Route path='/consumer/offers/new' component={() => <BreadCrumb text="Offer" />} />
         </PageHeader>
-        <DataSection offerId={offerId} />
+        <Body>
+          <Route path='/consumer' component={ActionSection} exact={true} />
+          <Route path='/consumer/offers/new' component={OfferEdit} />
+        </Body>
       </Container>
     )
   }
@@ -30,7 +37,19 @@ export class ConsumerView extends React.Component {
 const Container = styled.div`
   width: 100%;
   height: 100%;
+`;
 
+const Body = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
+
+function ActionSection(props) {
+  return (
+    <ActionRow>
+      <Action linkTo='/consumer/offers/new'>
+        CREATE OFFER
+      </Action>
+    </ActionRow>
+  )
+}

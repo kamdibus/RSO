@@ -11,7 +11,7 @@ class Router extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route component={ConsumerView} path='/consumer/offers/:id' />
+          <Route component={ConsumerView} path='/consumer' />
           <Route component={SupplierView} path='/supplier' />
           <Route component={RoleSelect} path='/role-select' />
           <Redirect from='/' to='/role-select' />
@@ -22,12 +22,11 @@ class Router extends React.Component {
 }
 
 function RoleSelect() {
-  const offerId = Math.round(Math.random() * 10000)
   return (
     <Container>
       <ActionRow>
         <Action linkTo='/supplier' text="Supplier" />
-        <Action linkTo={'/consumer/offers/' + offerId} text="Consumer" />
+        <Action linkTo='/consumer' text="Consumer" />
       </ActionRow>
     </Container>
   )
