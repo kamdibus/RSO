@@ -1,6 +1,7 @@
 package rso.dto;
 
 import rso.model.Payment;
+import rso.model.StatusType;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -11,7 +12,7 @@ public class OfferDto {
 
     private float discount;
 
-    private String status;
+    private StatusType status;
 
     private Date creationDate;
 
@@ -43,11 +44,11 @@ public class OfferDto {
         return this.invoice_id;
     }
 
-    public void setStatus(String status){
+    public void setStatus(StatusType status){
         this.status = status;
     }
 
-    public String getStatus(){
+    public StatusType getStatus(){
         return this.status;
     }
 

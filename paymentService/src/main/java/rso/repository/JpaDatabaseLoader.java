@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import rso.model.Offer;
 import rso.model.Payment;
+import rso.model.StatusType;
 
 import java.util.Date;
 
@@ -22,8 +23,8 @@ public class JpaDatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        this.paymentRepository.save(new Payment(new Date() ,"pending"));
+        this.paymentRepository.save(new Payment(new Date() , StatusType.ACCEPTED));
         Payment payment = this.paymentRepository.findById((long) 1).get();
-        this.offerRepository.save(new Offer(new Date(), 1, 12.112f, "pending", new Payment(new Date() ,"pending")));
+        this.offerRepository.save(new Offer(new Date(), 1, 12.112f, StatusType.ACCEPTED, new Payment(new Date() ,StatusType.PENDING)));
     }
 }

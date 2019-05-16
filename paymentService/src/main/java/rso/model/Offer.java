@@ -21,7 +21,7 @@ public class Offer {
 
     private float discount;
 
-    private String status;
+    private StatusType status;
 
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date creationDate;
@@ -31,7 +31,7 @@ public class Offer {
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
-    public Offer(Date creationDate, long invoice_id, float discount, String status, Payment... payments) {
+    public Offer(Date creationDate, long invoice_id, float discount, StatusType status, Payment... payments) {
         this.creationDate = creationDate;
         this.invoice_id = invoice_id;
         this.status = status;
@@ -66,11 +66,11 @@ public class Offer {
         return this.invoice_id;
     }
 
-    public void setStatus(String status){
+    public void setStatus(StatusType status){
         this.status = status;
     }
 
-    public String getStatus(){
+    public StatusType getStatus(){
         return this.status;
     }
 

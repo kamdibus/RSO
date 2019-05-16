@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
+import rso.dto.PaymentDto;
 import rso.exceptions.InvalidPaymentIdException;
 import rso.model.Payment;
 import rso.service.PaymentService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(path="/payments/")
@@ -25,7 +28,7 @@ public class PaymentController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    Payment getPaymentInfo (@PathVariable final long id) {
+    PaymentDto getPaymentInfo (@PathVariable final long id) {
        try {
            return paymentService.getPaymentForId(id);
        } catch (InvalidPaymentIdException e) {
@@ -35,7 +38,7 @@ public class PaymentController {
 
     @GetMapping(path="")
     public @ResponseBody
-    Iterable<Payment> getPatments () {
+    List<PaymentDto> getPatments () {
         return paymentService.getPayments();
     }
 }

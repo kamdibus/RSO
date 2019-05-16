@@ -25,9 +25,9 @@ public class Payment {
     @JsonIgnore
     private Offer offer;
 
-    private String status;
+    private StatusType status;
 
-    public Payment(Date paymentDate, String status) {
+    public Payment(Date paymentDate, StatusType status) {
         this.paymentDate = paymentDate;
         this.status = status;
     }
@@ -58,11 +58,11 @@ public class Payment {
         return this.offer;
     }
 
-    public void setStatus(String status){
+    public void setStatus(StatusType status){
         this.status = status;
     }
 
-    public String getStatus(){
+    public StatusType getStatus(){
         return this.status;
     }
 }

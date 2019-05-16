@@ -1,14 +1,17 @@
 package rso.dto;
 
+import rso.model.Offer;
+import rso.model.StatusType;
+
 import java.text.ParseException;
 import java.util.Date;
 
 public class PaymentDto {
     private long id;
 
-    private String status;
+    private StatusType status;
 
-    private Date creationDate;
+    private Date paymentDate;
 
     public void setId(long id){
         this.id = id;
@@ -18,19 +21,19 @@ public class PaymentDto {
         return this.id;
     }
 
-    public void setCreationDate(Date creationDate){
-        this.creationDate = new Date();
+    public void setCreationDate(Date paymentDate){
+        this.paymentDate = new Date();
     }
 
     public Date getCreationDate(String timezone) throws ParseException {
-        return this.creationDate;
+        return this.paymentDate;
     }
 
-    public void setStatus(String status){
+    public void setStatus(StatusType status){
         this.status = status;
     }
 
-    public String getStatus(){
+    public StatusType getStatus(){
         return this.status;
     }
 
