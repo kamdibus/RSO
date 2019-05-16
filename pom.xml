@@ -8,6 +8,12 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>testDeploy</module>
+        <module>invoiceService</module>
+        <module>consumerService</module>
+    </modules>
+
     <properties>
         <revision>0.0.2-SNAPSHOT</revision>
         <projectVersion>0.0.2</projectVersion>

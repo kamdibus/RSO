@@ -1,0 +1,8 @@
+com\rso\InvoiceServiceApplication.class
+com\rso\repository\InvoiceDatabaseLoader.class
+com\rso\repository\InvoiceRepository.class
+com\rso\configuration\MvcConfig.class
+com\rso\exceptions\InvalidInvoiceIdException.class
+com\rso\controller\InvoiceController.class
+com\rso\service\InvoiceService.class
+com\rso\model\Invoice.class

@@ -91,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.rso.DemoJavaSpringApplication</mainClass>
+                            <mainClass>com.rso.InvoiceServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,0 +1,7 @@
+com\rso\model\Quote.class
+com\rso\configuration\MvcConfig.class
+com\rso\repository\AuthorRepository.class
+com\rso\model\Author.class
+com\rso\DemoJavaSpringApplication.class
+com\rso\controller\QuoteController.class
+com\rso\repository\QuoteRepository.class
