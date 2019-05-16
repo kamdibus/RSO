@@ -39,6 +39,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <spring-boot-starter-security.version>2.1.4.RELEASE</spring-boot-starter-security.version>
         <spring.version>5.0.6.RELEASE</spring.version>
+        <mapper.version>2.3.2</mapper.version>
     </properties>
 
     <build>
@@ -201,6 +202,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring-boot-starter-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${mapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
