@@ -20,8 +20,8 @@ export const SupplierService = {
   getOffers: async function(): Promise<OfferPayload[]> {
     await delay(1500);
     return [
-      { supplier: "X Company", ratio: 0.98, expirationDate: (new Date()).toISOString(), invoiceId: 1 },
-      { supplier: "Y Company", ratio: 0.995, expirationDate: (new Date()).toISOString(), invoiceId: 2 }
+      { supplier: "X Company", ratio: 0.98, expirationDate: (new Date()).toISOString(), invoiceId: 1, id: 1 },
+      { supplier: "Y Company", ratio: 0.995, expirationDate: (new Date()).toISOString(), invoiceId: 2, id: 420 }
     ]
   }
 }

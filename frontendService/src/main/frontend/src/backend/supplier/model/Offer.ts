@@ -3,6 +3,7 @@ export interface OfferPayload {
   supplier: string;
   ratio: number;
   invoiceId: number;
+  id?: number;
 }
 
 export interface OfferResponse {

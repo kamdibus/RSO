@@ -7,7 +7,7 @@ export function ActionSection({ onAccept, onReject }) {
   return (
     <Container>
       <ActionRow>
-        <PrimaryButton onClick={onAccept}>Accept & Pay</PrimaryButton>
+        <PrimaryButton onClick={onAccept}>Accept & Receive $$</PrimaryButton>
         <PrimaryButton onClick={onReject}>Reject</PrimaryButton>
       </ActionRow>
     </Container>
