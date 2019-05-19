@@ -1,5 +1,6 @@
 package rso.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import rso.model.Offer;
 import rso.model.StatusType;
 
@@ -13,7 +14,7 @@ public class PaymentDto {
 
     private Date paymentDate;
 
-    private OfferDto offer;
+    private long offerId;
 
     public void setId(long id){
         this.id = id;
@@ -39,11 +40,11 @@ public class PaymentDto {
         return this.status;
     }
 
-    public void setOffer(OfferDto offer){
-        this.offer= offer;
+    public void setOfferId(Offer offer){
+        this.offerId= offer.getId();
     }
 
-    public OfferDto getOffer(){
-        return this.offer;
+    public long getOfferId(){
+        return this.offerId;
     }
 }
