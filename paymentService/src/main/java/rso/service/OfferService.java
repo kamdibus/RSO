@@ -1,12 +1,19 @@
 package rso.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import rso.exceptions.InvalidPaymentIdException;
+import rso.dto.OfferAddDto;
+import rso.dto.OfferDto;
+import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
-import rso.model.Payment;
+import rso.model.StatusType;
 import rso.repository.OfferRepository;
-import rso.repository.PaymentRepository;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class OfferService {
@@ -18,14 +25,60 @@ public class OfferService {
         this.offerRepository = offerRepository;
     }
 
-    public Offer getOfferForId(long id) throws InvalidPaymentIdException {
-        if (!offerRepository.findById(id).isPresent()) {
-            throw new InvalidPaymentIdException();
-        }
-        return offerRepository.findById(id).get();
+    private OfferDto convertToDto(Offer offer) {
+        ModelMapper modelMapper = new ModelMapper();
+        OfferDto offerDto = modelMapper.map(offer, OfferDto.class);
+        return offerDto;
     }
 
-    public Iterable<Offer> getOffers() {
-        return offerRepository.findAll();
+    private Offer convertToEntity(OfferAddDto offerAddDto) throws ParseException {
+        ModelMapper modelMapper = new ModelMapper();
+        Offer offer = modelMapper.map(offerAddDto, Offer.class);
+        offer.setCreationDate(new Date());
+        offer.setStatus(StatusType.pending);
+        return offer;
     }
+
+    public OfferDto getOfferForId(long id) throws InvalidOfferIdException {
+        if (!offerRepository.findById(id).isPresent()) {
+            throw new InvalidOfferIdException();
+        }
+        Offer offer = offerRepository.findById(id).get();
+        return convertToDto(offer);
+    }
+
+    public List<OfferDto> getOffers() {
+        List<Offer> offers = (List<Offer>) offerRepository.findAll();
+        return offers.stream()
+                .map(post -> convertToDto(post))
+                .collect(Collectors.toList());
+    }
+
+    public List<OfferDto> getOffersByStatus(StatusType statusType) {
+        List<Offer> offers = (List<Offer>) offerRepository.findByStatus(statusType);
+        return offers.stream()
+                .map(post -> convertToDto(post))
+                .collect(Collectors.toList());
+    }
+
+    public List<OfferDto> getOffersForUser(Long userId) {
+        List<Offer> offers = (List<Offer>) offerRepository.findByUserId(userId);
+        return offers.stream()
+                .map(post -> convertToDto(post))
+                .collect(Collectors.toList());
+    }
+
+    public List<OfferDto> getOffersForUserWithStatus(Long userId, StatusType statusType) {
+        List<Offer> offers = (List<Offer>) offerRepository.findByUserIdAndStatus(userId, statusType);
+        return offers.stream()
+                .map(post -> convertToDto(post))
+                .collect(Collectors.toList());
+    }
+
+    public OfferDto addOffer(OfferAddDto offerDto) throws ParseException {
+        Offer offer = convertToEntity(offerDto);
+        Offer offerCreated = offerRepository.save(offer);
+        return convertToDto(offerCreated);
+    }
+
 }

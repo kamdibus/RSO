@@ -26,14 +26,17 @@ public class Offer {
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date creationDate;
 
-    private long invoice_id;
+    private long invoiceId;
+    
+    private long userId;
 
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
-    public Offer(Date creationDate, long invoice_id, float discount, StatusType status, Payment... payments) {
+    public Offer(Date creationDate, long userId,  long invoiceId, float discount, StatusType status, Payment... payments) {
         this.creationDate = creationDate;
-        this.invoice_id = invoice_id;
+        this.userId = userId;
+        this.invoiceId = invoiceId;
         this.status = status;
         this.discount = discount;
         this.payments = Stream.of(payments).collect(Collectors.toSet());
@@ -58,12 +61,20 @@ public class Offer {
         return this.creationDate;
     }
 
-    public void setInvoice_id(long invoice_id){
-        this.invoice_id = invoice_id;
+    public void setInvoiceId(long invoiceId){
+        this.invoiceId = invoiceId;
     }
 
-    public long getInvoice_id(){
-        return this.invoice_id;
+    public long getInvoiceId(){
+        return this.invoiceId;
+    }
+
+    public void setUserId(long userId){
+        this.userId = userId;
+    }
+
+    public long getUserId(){
+        return this.userId;
     }
 
     public void setStatus(StatusType status){

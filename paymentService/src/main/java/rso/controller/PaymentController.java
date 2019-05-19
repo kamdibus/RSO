@@ -3,14 +3,12 @@ package rso.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rso.dto.PaymentDto;
 import rso.exceptions.InvalidPaymentIdException;
 import rso.model.Payment;
+import rso.model.StatusType;
 import rso.service.PaymentService;
 
 import java.util.List;
@@ -38,7 +36,10 @@ public class PaymentController {
 
     @GetMapping(path="")
     public @ResponseBody
-    List<PaymentDto> getPatments () {
+    List<PaymentDto> getPatments (@RequestParam(required = false) StatusType status) {
+        if (status != null){
+            return paymentService.getPaymentsWithStatus(status);
+        }
         return paymentService.getPayments();
     }
 }

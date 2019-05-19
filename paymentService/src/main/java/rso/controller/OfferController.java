@@ -4,18 +4,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import rso.dto.OfferAddDto;
 import rso.dto.OfferDto;
-import rso.exceptions.InvalidPaymentIdException;
+import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
+import rso.model.StatusType;
 import rso.service.OfferService;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path="/offers/")
@@ -40,18 +40,34 @@ public class OfferController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    Offer getOfferInfo (@PathVariable final long id) {
+    OfferDto getOfferInfo (@PathVariable final long id) {
         try {
             return offerService.getOfferForId(id);
-        } catch (InvalidPaymentIdException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No payment for this id", e);
+        } catch (InvalidOfferIdException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No offer for this id", e);
         }
     }
 
     @GetMapping(path="")
     public @ResponseBody
-    Iterable<Offer> getOffers () {
+    List<OfferDto> getOffers (@RequestParam(required = false) StatusType status, @RequestParam(required = false) Long userId) {
+        List<OfferDto> offers = new ArrayList<OfferDto>();
+        if (status != null && userId != null){
+            return offerService.getOffersForUserWithStatus(userId, status);
+        }
+        if (status != null){
+            return offerService.getOffersByStatus(status);
+        }
+        if (userId != null){
+            return offerService.getOffersForUser(userId);
+        }
         return offerService.getOffers();
+    }
+
+    @PostMapping(path = "")
+    public @ResponseBody
+    OfferDto addOffer(@RequestBody OfferAddDto offer) throws ParseException {
+        return offerService.addOffer(offer);
     }
 }
 

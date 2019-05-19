@@ -3,9 +3,13 @@ package rso.dto;
 import rso.model.Payment;
 import rso.model.StatusType;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OfferDto {
     private long id;
@@ -16,9 +20,11 @@ public class OfferDto {
 
     private Date creationDate;
 
-    private long invoice_id;
+    private long invoiceId;
 
-    private Set<Payment> payments;
+    private long userId;
+
+    private Set<PaymentDto> payments;
 
     public void setId(long id){
         this.id = id;
@@ -32,17 +38,26 @@ public class OfferDto {
         this.creationDate = new Date();
     }
 
-    public Date getCreationDate(String timezone) throws ParseException {
+    public Date getCreationDate(){
         return this.creationDate;
     }
 
-    public void setInvoice_id(long invoice_id){
-        this.invoice_id = invoice_id;
+    public void setInvoiceId(long invoiceId){
+        this.invoiceId = invoiceId;
     }
 
-    public long getInvoice_id(){
-        return this.invoice_id;
+    public long getInvoiceId(){
+        return this.invoiceId;
     }
+
+    public void setUserId(long userId){
+        this.userId = userId;
+    }
+
+    public long getUserId(){
+        return this.userId;
+    }
+
 
     public void setStatus(StatusType status){
         this.status = status;
@@ -59,4 +74,14 @@ public class OfferDto {
     public float getDiscount(float discount){
         return this.discount;
     }
+
+    public void setPayments(Set<PaymentDto> payments){
+
+        this.payments = payments;
+    }
+
+    public Set<PaymentDto> getPayments(Set<PaymentDto> payments){
+        return this.payments;
+    }
+
 }
