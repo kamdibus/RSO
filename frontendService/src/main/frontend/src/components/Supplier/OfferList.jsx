@@ -25,6 +25,7 @@ export class OfferList extends React.Component {
           columns={[
             { name: 'supplier', label: "Supplier" },
             { name: 'ratio', label: "Ratio" },
+            { name: 'priceGross', label: "Price gross" },
             { name: 'expirationDate', label: "Expiration date" },
           ]}
           rows={rows}
