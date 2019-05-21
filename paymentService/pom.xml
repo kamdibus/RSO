@@ -96,7 +96,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.rso.DemoJavaSpringApplication</mainClass>
+                            <mainClass>rso.DemoJavaSpringApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
