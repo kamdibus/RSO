@@ -34,6 +34,10 @@ public class OfferDto {
 
     @Setter
     @Getter
+    private Date expirationDate;
+
+    @Setter
+    @Getter
     private long invoiceId;
 
     @Setter
