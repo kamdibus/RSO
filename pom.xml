@@ -22,6 +22,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <repositoryUri>261060041830.dkr.ecr.eu-central-1.amazonaws.com/testdeploy</repositoryUri>
 
+        <javax.activation.version>1.1.1</javax.activation.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <junit.version>4.12</junit.version>
         <spring-test.version>5.0.7.RELEASE</spring-test.version>
@@ -35,81 +36,144 @@
         <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <mongo-java-driver.version>3.10.1</mongo-java-driver.version>
+        <spring-data-mongodb.version>2.1.5.RELEASE</spring-data-mongodb.version>
+        <lombok.version>1.18.6</lombok.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <spring-boot-starter-security.version>2.1.4.RELEASE</spring-boot-starter-security.version>
+        <spring.version>5.0.6.RELEASE</spring.version>
+        <mapper.version>2.3.2</mapper.version>
     </properties>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot-starter.version}</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven-jar-plugin.version}</version>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addClasspath>true</addClasspath>
-                                <classpathPrefix>lib/</classpathPrefix>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>${dockerfile-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>default</id>
-                            <goals>
-                                <goal>build</goal>
-                                <goal>push</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-                        <tag>${projectVersion}</tag>
-                        <buildArgs>
-                            <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                        </buildArgs>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>initialize</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
-                            <configuration>
-                                <overWriteReleases>false</overWriteReleases>
-                                <includeScope>runtime</includeScope>
-                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>testDeploy</module>
+                <module>consumerService</module>
+                <module>userService</module>
+                <module>frontendService</module>
+                <module>paymentService</module>
+            </modules>
 
-    <profiles></profiles>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <version>${spring-boot-starter.version}</version>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <version>${maven-jar-plugin.version}</version>
+                            <configuration>
+                                <archive>
+                                    <manifest>
+                                        <addClasspath>true</addClasspath>
+                                        <classpathPrefix>lib/</classpathPrefix>
+                                    </manifest>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>dockerfile-maven-plugin</artifactId>
+                            <version>${dockerfile-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>default</id>
+                                    <goals>
+                                        <goal>build</goal>
+                                        <goal>push</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                                <tag>latest</tag>
+                                <buildArgs>
+                                    <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                                </buildArgs>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-dependency-plugin</artifactId>
+                            <version>${maven-dependency-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <phase>initialize</phase>
+                                    <goals>
+                                        <goal>copy-dependencies</goal>
+                                    </goals>
+                                    <configuration>
+                                        <overWriteReleases>false</overWriteReleases>
+                                        <includeScope>runtime</includeScope>
+                                        <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${maven-resources-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>${maven-deploy-plugin.version}</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+        <profile>
+            <id>ci-config</id>
+            <modules>
+                <module>dockerImages</module>
+            </modules>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>dockerfile-maven-plugin</artifactId>
+                            <version>${dockerfile-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>default</id>
+                                    <goals>
+                                        <goal>build</goal>
+                                        <goal>push</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                                <tag>latest</tag>
+                                <buildArgs>
+                                    <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                                </buildArgs>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -184,9 +248,34 @@
                 <version>${webjarsBootstrap.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongo-java-driver</artifactId>
+                <version>${mongo-java-driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>${spring-data-mongodb.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-starter-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${mapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
