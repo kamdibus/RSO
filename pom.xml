@@ -50,6 +50,7 @@
                 <module>consumerService</module>
                 <module>frontendService</module>
                 <module>paymentService</module>
+                <module>invoiceService</module>
             </modules>
 
             <build>
