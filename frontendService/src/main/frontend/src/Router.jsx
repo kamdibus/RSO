@@ -1,18 +1,20 @@
 import React from 'react';
 import { SupplierView } from './components/Supplier/SupplierView';
 import { ConsumerView } from './components/Consumer/ConsumerView';
-import { BrowserRouter, Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { ActionRow } from './components/Layout/ActionRow';
 import { Action } from './components/Layout/Action';
+import { AdminView } from './components/Admin/AdminView';
 
 class Router extends React.Component {
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route component={ConsumerView} path='/consumer/offers/:id' />
+          <Route component={ConsumerView} path='/consumer' />
           <Route component={SupplierView} path='/supplier' />
+          <Route component={AdminView} path='/admin' />
           <Route component={RoleSelect} path='/role-select' />
           <Redirect from='/' to='/role-select' />
         </Switch>
@@ -22,12 +24,12 @@ class Router extends React.Component {
 }
 
 function RoleSelect() {
-  const offerId = Math.round(Math.random() * 10000)
   return (
     <Container>
       <ActionRow>
         <Action linkTo='/supplier' text="Supplier" />
-        <Action linkTo={'/consumer/offers/' + offerId} text="Consumer" />
+        <Action linkTo='/consumer' text="Consumer" />
+        <Action linkTo='/admin' text="Admin" />
       </ActionRow>
     </Container>
   )

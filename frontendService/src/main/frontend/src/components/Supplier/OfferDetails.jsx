@@ -3,10 +3,10 @@ import { ConsumerService } from '../../backend/consumer/service/consumer';
 import { Details } from '../common/Details';
 import styled from 'styled-components';
 import { LoadingOverlay } from '../common/Loading/Overlay';
-import { ActionSection } from './ActionSection';
+import { ActionSection } from '../Consumer/ActionSection';
 import { Snackbar } from '../common/Snackbar'
 
-export class DataSection extends React.Component {
+export class OfferDetails extends React.Component {
   constructor(props) {
     super(props)
     this.snackbar = React.createRef()
@@ -43,7 +43,7 @@ export class DataSection extends React.Component {
     return (
       <Container >
         {loading && <LoadingOverlay />}
-        <OfferDetails
+        <OfferDetailsSection
           fields={fields.concat(offerIdField)}
         />
         <ActionSection onAccept={this.onOfferAccept} onReject={this.onOfferReject} />
@@ -77,7 +77,7 @@ function flattenObject(obj) {
     }, {})
 }
 
-const OfferDetails = styled(Details)`
+const OfferDetailsSection = styled(Details)`
   width: 80%;
 `
 
