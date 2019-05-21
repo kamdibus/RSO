@@ -5,7 +5,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import MUIPaper from '@material-ui/core/Paper';
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
 export function DataTable({ columns, rows }) {
   return (
@@ -17,16 +18,22 @@ export function DataTable({ columns, rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, rowIndex) => (
-            <TableRow key={row.key != null ? row.key : rowIndex}>
-              {columns.map(column => <TableCell key={column.name}>{row[column.name] || ''}</TableCell>)}
-            </TableRow>
-          ))}
+          {rows.map((row, rowIndex) => <Row key={rowIndex} data={row.data} href={row.href} columns={columns} />)}
         </TableBody>
       </Table>
     </Paper>
   );
 }
+
+const Row = withRouter(
+  ({ data, columns, href, history }) => {
+    return (
+      <TableRow onClick={() => href && history.push(href)} hover={true}>
+        {columns.map(column => <TableCell key={column.name}>{data[column.name] || ''}</TableCell>)}
+      </TableRow>
+    )
+  }
+)
 
 const Table = styled(MUITable)`
   min-width: 700px;

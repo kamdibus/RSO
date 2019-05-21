@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Formik, Field } from 'formik';
+import { Formik } from 'formik';
 import { FormField, DateField, FormTextField } from '../common/FormField';
-import { Colors } from '../constants/Colors';
-import { CommonStyles } from '../constants/CommonStyles';
 import { SupplierService } from '../../backend/supplier/service/supplier';
 import { LoadingOverlay } from '../common/Loading/Overlay';
 import { PrimaryButton } from '../common/Button';
-import { DateTimePicker } from "material-ui-pickers";
 import { Snackbar } from '../common/Snackbar';
 
 export class OfferEdit extends React.Component {
@@ -47,7 +44,8 @@ function OfferEditForm({ onSubmitSuccess }) {
           ratio: '',
           expirationDate: new Date(),
           invoiceFilename: '',
-          invoiceFileData: null
+          invoiceFileData: null,
+          nip: ''
         }}
         onSubmit={(values, { setSubmitting }) => {
           const {
@@ -55,7 +53,8 @@ function OfferEditForm({ onSubmitSuccess }) {
             ratio,
             expirationDate,
             invoiceFilename,
-            invoiceFileData
+            invoiceFileData,
+            nip
           } = values
           SupplierService
             .uploadInvoice(invoiceFilename, invoiceFileData)
@@ -96,6 +95,13 @@ function OfferEditForm({ onSubmitSuccess }) {
               id='ratio'
               label="Ratio"
               value={values.ratio}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <FormTextField
+              id='nip'
+              label="NIP"
+              value={values.nip}
               onChange={handleChange}
               onBlur={handleBlur}
             />
