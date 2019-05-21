@@ -7,6 +7,9 @@ import { PageHeader } from '../Layout/PageHeader';
 import { TopHeader } from '../Layout/TopHeader';
 import { OfferList } from './OfferList';
 import { OfferDetails } from './OfferDetails';
+import SupplierNavigation from './SupplierNavigation';
+import { OfferHistory } from '../Party/OfferHistory';
+import { AccountEdit } from '../Party/AccountEdit';
 
 export class SupplierView extends React.Component {
   render() {
@@ -22,8 +25,11 @@ export class SupplierView extends React.Component {
             Supplier
           </BreadCrumb>
         </PageHeader>
-        <Route path='/supplier' component={OfferList} exact={true} />
-        <Route path='/supplier/offers/:id' component={props => <OfferDetails offerId={props.match.params.id} />} /> />
+        <SupplierNavigation />
+        <Route path='/supplier/offers' component={OfferList} exact={true} />
+        <Route path='/supplier/offers-history' component={OfferHistory} exact={true} />
+        <Route path='/supplier/account' component={AccountEdit} exact={true} />
+        <Route path='/supplier/offers/:id' component={props => <OfferDetails offerId={props.match.params.id} />} />
       </Container>
     )
   }

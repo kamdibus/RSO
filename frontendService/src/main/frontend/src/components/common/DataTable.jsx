@@ -5,8 +5,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import MUIPaper from '@material-ui/core/Paper';
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { PureLink } from './PureLink';
+import styled from 'styled-components';
 import { withRouter } from 'react-router';
 
 export function DataTable({ columns, rows }) {
