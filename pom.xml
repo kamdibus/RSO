@@ -23,6 +23,7 @@
         <h2.version>1.4.194</h2.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <lombok.version>1.18.6</lombok.version>
+        <modelMapper.version>2.3.0</modelMapper.version>
         <webjarsBootstrap.version>3.3.7</webjarsBootstrap.version>
         <spring-boot-starter.version>2.1.3.RELEASE</spring-boot-starter.version>
         <dockerfile-plugin.version>1.3.6</dockerfile-plugin.version>
@@ -262,6 +263,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring-boot-starter-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelMapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
