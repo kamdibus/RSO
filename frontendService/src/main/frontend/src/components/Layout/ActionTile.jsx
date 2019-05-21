@@ -6,7 +6,7 @@ export const ActionTile = styled.button`
   height: 92px;
   background-color: #282c34;
   border: 0;
-  box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
   outline: none;
   cursor: pointer;
   display: flex;
@@ -17,6 +17,11 @@ export const ActionTile = styled.button`
     background-color: #181c14;
   }
   &:active {
-    background-color: #080c04;  
+    background-color: #080c04;
+    box-shadow: none;
   }
+  ${({ active }) => active && `
+    background-color: #080c04;
+    box-shadow: none;
+  `}
 `

@@ -4,7 +4,7 @@ import { DataTable } from "../common/DataTable";
 import React from 'react';
 import { SupplierService } from "../../backend/supplier/service/supplier";
 
-export class DataSection extends React.Component {
+export class OfferList extends React.Component {
   state = {
     offers: [],
     loading: true
@@ -16,6 +16,8 @@ export class DataSection extends React.Component {
   }
   render() {
     const { offers, loading } = this.state
+    const rows = offers
+      .map(data => ({ data, href: `/supplier/offers/${data.id}` }))
     return (
       <DataRow>
         {loading && <LoadingOverlay />}
@@ -23,9 +25,10 @@ export class DataSection extends React.Component {
           columns={[
             { name: 'supplier', label: "Supplier" },
             { name: 'ratio', label: "Ratio" },
+            { name: 'priceGross', label: "Price gross" },
             { name: 'expirationDate', label: "Expiration date" },
           ]}
-          rows={offers}
+          rows={rows}
         />
       </DataRow>
     )
