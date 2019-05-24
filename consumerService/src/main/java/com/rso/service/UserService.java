@@ -76,6 +76,7 @@ public class UserService {
 
     public ResponseEntity<?> getOffersForUserId(long userId, String status) {
         String url = prepareUrlForPaymentServiceGet(userId, status, this.apiOfferService);
+        System.out.println(url);
         return getForPaymentOfferEntities(url);
     }
 
