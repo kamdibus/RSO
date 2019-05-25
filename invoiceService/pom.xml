@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <properties></properties>
+    <properties/>
 
     <parent>
         <groupId>com.rso</groupId>
@@ -11,7 +11,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>paymentService</artifactId>
+    <artifactId>invoiceService</artifactId>
     <version>${revision}</version>
     <packaging>jar</packaging>
 
@@ -78,12 +78,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -96,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>rso.DemoJavaSpringApplication</mainClass>
+                            <mainClass>com.rso.InvoiceServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -105,7 +100,7 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
-                    <repository>rsoprojectwut/paymentservice</repository>
+                    <repository>rsoprojectwut/invoiceservice</repository>
                 </configuration>
             </plugin>
             <plugin>
