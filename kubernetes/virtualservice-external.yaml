@@ -1,0 +1,25 @@
+kind: VirtualService
+metadata:
+  name: external-services
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        exact: /callback
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    - uri:
+        regex: /test
+    route:
+    - destination:
+        host: testdeploy
+        port:
+          number: 80
