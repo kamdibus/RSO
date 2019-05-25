@@ -17,14 +17,16 @@ export class OfferEdit extends React.Component {
     return (
       <Container>
         <Header>
-          {/* <Title>Edit offer</Title> */}
         </Header>
         <FormContainer>
-          <OfferEditForm onSubmitSuccess={this.onOfferSubmit} />
+          <OfferEditForm onSubmitSuccess={this.onOfferSubmit} onSubmitError={this.onOfferSubmitError} />
         </FormContainer>
         <Snackbar ref={this.snackbar} />
       </Container>
     )
+  }
+  onOfferSubmitError = () => {
+    this.openSnackbar("Offer submitting error")
   }
   onOfferSubmit = () => {
     this.openSnackbar("Offer submitted")
@@ -36,33 +38,37 @@ export class OfferEdit extends React.Component {
   } 
 }
 
-function OfferEditForm({ onSubmitSuccess }) {
+function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
   return (
     <Formik
         initialValues={{
-          supplier: '',
-          ratio: '',
+          userId: '',
+          discount: '',
           expirationDate: new Date(),
           invoiceFilename: '',
           invoiceFileData: null,
-          nip: ''
+          invoiceId: ''
         }}
         onSubmit={(values, { setSubmitting }) => {
           const {
-            supplier,
-            ratio,
+            userId,
+            discount,
             expirationDate,
             invoiceFilename,
             invoiceFileData,
-            nip
+            invoiceId
           } = values
           SupplierService
             .uploadInvoice(invoiceFilename, invoiceFileData)
             .then(({ id: invoiceId }) => SupplierService
-              .postOffer({ invoiceId, expirationDate, ratio, supplier })
+              .postOffer({ invoiceId, userId, discount })
               .then(res => {
-                setSubmitting(false);
-                onSubmitSuccess();
+                setSubmitting(false)
+                onSubmitSuccess()
+              })
+              .catch(res => {
+                setSubmitting(false)
+                onSubmitError()
               })
             )
         }}
@@ -85,22 +91,22 @@ function OfferEditForm({ onSubmitSuccess }) {
           <Form onSubmit={handleSubmit}>
             {isSubmitting && <LoadingOverlay />}
             <FormTextField
-              id='supplier'
-              label="Supplier name"
+              id='userId'
+              label="User id"
               value={values.supplier}
               onChange={handleChange}
               onBlur={handleBlur}
             />
             <FormTextField
-              id='ratio'
-              label="Ratio"
+              id='discount'
+              label="Discount"
               value={values.ratio}
               onChange={handleChange}
               onBlur={handleBlur}
             />
             <FormTextField
-              id='nip'
-              label="NIP"
+              id='invoiceId'
+              label="Invoice id"
               value={values.nip}
               onChange={handleChange}
               onBlur={handleBlur}
