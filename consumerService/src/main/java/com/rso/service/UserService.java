@@ -76,7 +76,6 @@ public class UserService {
 
     public ResponseEntity<?> getOffersForUserId(long userId, String status) {
         String url = prepareUrlForPaymentServiceGet(userId, status, this.apiOfferService);
-        System.out.println(url);
         return getForPaymentOfferEntities(url);
     }
 
@@ -97,14 +96,14 @@ public class UserService {
 
     private String preparePaymentServiceCallUrl(long userId) {
         UriComponents uri = UriComponentsBuilder.newInstance()
-                .scheme("https").host(this.apiOfferService).path("/".concat(String.valueOf(userId)))
+                .scheme("http").host(this.apiOfferService).path("/".concat(String.valueOf(userId)))
                 .build();
         return uri.toUriString();
     }
 
     private String prepareUrlForPaymentServiceGet(long userId, String status, String host) {
         UriComponents uri = UriComponentsBuilder.newInstance()
-                .scheme("https").host(host)
+                .scheme("http").host(host)
                 .queryParam("status", status)
                 .queryParam("user_id", userId)
                 .build();
@@ -113,7 +112,7 @@ public class UserService {
 
     private String prepareForFullUserOffersDelete(long userId) {
         UriComponents uri = UriComponentsBuilder.newInstance()
-                .scheme("https").host(this.apiOfferService)
+                .scheme("http").host(this.apiOfferService)
                 .queryParam("user_id", userId)
                 .build();
         return uri.toUriString();
