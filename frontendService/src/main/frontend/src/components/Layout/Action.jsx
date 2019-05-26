@@ -6,13 +6,18 @@ import { withRouter, matchPath } from 'react-router';
 
 export const Action = withRouter(
   function (props) {
+    const { matchExact } = props
     const Wrapper = props.linkTo ? PureLink : React.Fragment;
-    const matchExact = () => {
+    const matchLocation = () => {
       const match = matchPath(props.location.pathname, props.linkTo)
-      return match && match.isExact
+      
+      if (matchExact) {
+        return match && match.isExact
+      }
+      return match
     }
     
-    const active = props.linkTo && matchExact()
+    const active = props.linkTo && matchLocation()
     return (
       <Container>
         <Wrapper to={props.linkTo}>

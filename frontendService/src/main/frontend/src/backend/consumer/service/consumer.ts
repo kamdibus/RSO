@@ -1,20 +1,8 @@
-import { OfferResponse } from './../model/Offer';
 import { delay } from '../../common/utils/delay';
-
+import { OfferResponse } from '../../supplier/model/Offer'
 export const ConsumerService = {
   getOffer: async function(id: number): Promise<OfferResponse> {
-    await delay(1000);
-    
-    return {
-      expirationDate: (new Date()).toDateString(),
-      supplier: 'X Company',
-      ratio: 0.995,
-      invoiceId: 1,
-      price: {
-        subtotal: 100,
-        total: 123,
-        tax: 23
-      }
-    }
+    return fetch(`/offers/${id}`)
+      .then(r => r.json());
   }
 }
