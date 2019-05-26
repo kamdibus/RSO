@@ -2,10 +2,10 @@ import MUITable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import MUITableRow from '@material-ui/core/TableRow';
 import MUIPaper from '@material-ui/core/Paper';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { withRouter } from 'react-router';
 
 export function DataTable({ columns, rows }) {
@@ -35,9 +35,17 @@ const Row = withRouter(
   }
 )
 
+
+const propHover = ({ hover }) => hover && css`
+  cursor: pointer;
+`
 const Table = styled(MUITable)`
   min-width: 700px;
 `
+const TableRow = styled(MUITableRow)`
+  ${propHover};
+`
+
 const Paper = styled(MUIPaper)`
   width: 100%;
   margin-top: 3px;
