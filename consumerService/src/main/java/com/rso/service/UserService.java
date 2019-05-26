@@ -53,7 +53,7 @@ public class UserService {
 
     public ResponseEntity<?> editDetailsForUserId(UserEntityDto newData, Long userId) {
         if (!userRepository.findById(userId).get().getUserStatus().equals(UserStatus.DELETED)) {
-            User updatedUser = new User(newData, userId);
+            User updatedUser = new User(newData);
             userRepository.save(updatedUser);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -121,5 +121,11 @@ public class UserService {
     public ResponseEntity<?> getPaymentsForUserId(Long userId, String status) {
         String url = prepareUrlForPaymentServiceGet(userId, status, this.apiPaymentService);
         return getForPaymentOfferEntities(url);
+    }
+
+    public ResponseEntity<?> createNewUserAccount(UserEntityDto userDto) {
+        User newUser = new User(userDto);
+        this.userRepository.save(newUser);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

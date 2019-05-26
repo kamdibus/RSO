@@ -45,8 +45,7 @@ public class User {
 
     public User() {}
 
-    public User(UserEntityDto newData, long userId) {
-        this.id = userId;
+    public User(UserEntityDto newData) {
         this.name = newData.getName();
         this.address = newData.getAddress();
         this.nipNumber = newData.getNipNumber();
