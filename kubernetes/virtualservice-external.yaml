@@ -1,3 +1,4 @@
+apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: external-services
@@ -7,19 +8,47 @@ spec:
   gateways:
   - http-gateway
   http:
+#  - match:
+#    - uri:
+#        exact: /
+#    - uri:
+#        exact: /callback
+#    - uri:
+#        prefix: /static
+#    - uri:
+#        regex: '^.*\.(ico|png|jpg)$'
+#    route:
+#    - destination:
+#        host: frontend
+#        port:
+#          number: 80
   - match:
     - uri:
         exact: /
     - uri:
-        exact: /callback
-    - uri:
-        prefix: /static
-    - uri:
-        regex: '^.*\.(ico|png|jpg)$'
-    - uri:
         regex: /test
+    - uri:
+        regex: /static
+    - uri:
+        regex: /consumer/*
     route:
     - destination:
-        host: testdeploy
+        host: testdeploy-lb
         port:
-          number: 80
+          number: 8080
+  - match:
+    - uri:
+        exact: /consumer/payment/1
+    route:
+    - destination:
+        host: consumer-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        exact: /payments/
+    route:
+    - destination:
+        host: payment-lb
+        port:
+          number: 8080
