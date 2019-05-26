@@ -1,7 +1,8 @@
 import { delay } from "../../common/utils/delay";
 import { UploadResponse } from "../model/Upload";
 import { OfferResponse, OfferPayload, OfferHistoryResponse, OfferStatus } from "../model/Offer";
-import axios from 'axios';
+import Axios from 'axios';
+import { PAYMENT_URL } from "../../../environment";
 
 export const SupplierService = {
   uploadInvoice: async function(fileName: string, fileData: File): Promise<UploadResponse> {
@@ -11,16 +12,18 @@ export const SupplierService = {
     };
   },
   postOffer: async function(offer: OfferPayload): Promise<OfferResponse> {
-    return axios
-      .post('/offers/', offer)
+    return Axios
+      .post(PAYMENT_URL + '/offers/', offer)
       .then(r => r.data)
   },
   getOffers: async function(): Promise<OfferResponse[]> {
-    return fetch('/offers/')
-      .then(r => r.json())
+    return Axios
+      .get(PAYMENT_URL + '/offers/')
+      .then(r => r.data)
   },
   getOffersHistory: async function(): Promise<OfferResponse[]> {
-    return fetch('/offers/')
-      .then(r => r.json())
+    return Axios
+      .get(PAYMENT_URL + '/offers/')
+      .then(r => r.data)
   }
 }

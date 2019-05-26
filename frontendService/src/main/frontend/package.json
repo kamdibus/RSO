@@ -20,6 +20,7 @@
     "history": "^4.9.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
+    "node-pre-gyp": "0.13.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-router": "^5.0.0",

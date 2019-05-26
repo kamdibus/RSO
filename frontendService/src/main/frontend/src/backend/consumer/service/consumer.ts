@@ -1,8 +1,9 @@
-import { delay } from '../../common/utils/delay';
 import { OfferResponse } from '../../supplier/model/Offer'
+import Axios from 'axios';
+import { PAYMENT_URL } from '../../../environment'
 export const ConsumerService = {
   getOffer: async function(id: number): Promise<OfferResponse> {
-    return fetch(`/offers/${id}`)
-      .then(r => r.json());
+    return Axios.get(PAYMENT_URL + `/offers/${id}`)
+      .then(r => r.data);
   }
 }
