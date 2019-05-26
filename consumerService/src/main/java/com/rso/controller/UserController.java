@@ -52,4 +52,9 @@ public class UserController  {
         return userService.createNewUserAccount(userDto);
     }
 
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> testMicroService() {
+        return userService.testService();
+    }
+
 }

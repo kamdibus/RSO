@@ -124,8 +124,12 @@ public class UserService {
     }
 
     public ResponseEntity<?> createNewUserAccount(UserEntityDto userDto) {
-        User newUser = new User(userDto);
+        User newUser = this.dtoHandler.checkDtoEnumFields(userDto);
         this.userRepository.save(newUser);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> testService() {
+        return new ResponseEntity<>("User service is working!", HttpStatus.OK);
     }
 }
