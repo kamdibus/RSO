@@ -6,18 +6,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InvoiceDatabaseLoader implements CommandLineRunner {
+public class InvoiceRepositoryLoader implements CommandLineRunner {
 
     private final InvoiceRepository invoiceRepository;
 
     @Autowired
-    public InvoiceDatabaseLoader(InvoiceRepository invoiceRepository) {
+    public InvoiceRepositoryLoader(InvoiceRepository invoiceRepository) {
         this.invoiceRepository = invoiceRepository;
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        this.invoiceRepository.save(new Invoice(1, "pierwsza fakturka"));
-        this.invoiceRepository.save(new Invoice(2, "druga fakturka"));
+        this.invoiceRepository.save(new Invoice(1, "first invoice"));
+        this.invoiceRepository.save(new Invoice(2, "second invoice"));
+        this.invoiceRepository.save(new Invoice(3, "third invoice"));
     }
 }

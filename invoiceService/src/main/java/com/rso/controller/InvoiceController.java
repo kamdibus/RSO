@@ -1,15 +1,15 @@
 package com.rso.controller;
 
+import com.rso.dto.InvoiceEntityDto;
 import com.rso.exceptions.InvalidInvoiceIdException;
-import com.rso.model.Invoice;
 import com.rso.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.ResponseEntity;
 
-@Controller
+@RestController
 @RequestMapping(path="/invoices")
 public class InvoiceController {
 
@@ -20,13 +20,29 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @GetMapping(path="/{id}")
-    public @ResponseBody
-    Invoice getInvoiceInfo (@PathVariable final long id) {
-       try {
-           return invoiceService.getInvoiceById(id);
-       } catch (InvalidInvoiceIdException e) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No invoice for this id", e);
-        }
+    @GetMapping(path="/{invoiceId}")
+    public ResponseEntity<?> getInvoiceInfo (@PathVariable final long invoiceId) {
+        return invoiceService.getInvoiceById(invoiceId);
+    }
+
+    @GetMapping(value = "/users/{userId}")
+    public ResponseEntity<?> getUserInvoices(@PathVariable final long userId) {
+        return invoiceService.getUserInvoices(userId);
+    }
+
+    @DeleteMapping(value = "/users/{userId}")
+    public ResponseEntity<?> removeUserInvoices(@PathVariable final long userId) {
+        return invoiceService.remoteUserInvoices(userId);
+    }
+
+    @PutMapping(value = "/{invoiceId}")
+    public ResponseEntity<?> editInvoiceDetails(@RequestBody final InvoiceEntityDto newData, @PathVariable final Long invoiceId) {
+        return invoiceService.editInvoiceById(newData, invoiceId);
+    }
+
+    @PutMapping(value = "/test")
+    public ResponseEntity<?> testInvoiceService() {
+        return invoiceService.testInvoiceService();
     }
 }
+
