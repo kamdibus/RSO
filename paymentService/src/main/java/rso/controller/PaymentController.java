@@ -12,6 +12,7 @@ import rso.model.StatusType;
 import rso.service.PaymentService;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,7 +28,7 @@ public class PaymentController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    PaymentDto getPaymentInfo (@PathVariable final long id) {
+    PaymentDto getPayment (@PathVariable final long id) {
        try {
            return paymentService.getPaymentForId(id);
        } catch (InvalidPaymentIdException e) {
@@ -35,18 +36,32 @@ public class PaymentController {
         }
     }
 
-    @GetMapping(path="")
-    public @ResponseBody
-    List<PaymentDto> getPatments (@RequestParam(required = false) StatusType status) {
-        if (status != null){
-            return paymentService.getPaymentsWithStatus(status);
-        }
-        return paymentService.getPayments();
-    }
-
     @PostMapping(path = "")
     public @ResponseBody
     PaymentDto addPayment(@RequestBody PaymentAddDto payment) throws ParseException {
         return paymentService.addPayment(payment);
+    }
+
+    @GetMapping(path="")
+    public @ResponseBody
+    List<PaymentDto> getPayments (@RequestParam(required = false) StatusType status, @RequestParam(required = false) Long userId) {
+        List<PaymentDto> payments = new ArrayList<PaymentDto>();
+        if (status != null && userId != null){
+            payments = paymentService.getPaymentsForUserWithStatus(userId, status);
+
+        }
+        else if (status != null){
+            payments = paymentService.getPaymentsByStatus(status);
+        }
+        else if (userId != null){
+            payments = paymentService.getPaymentsForUser(userId);
+        }
+        else{
+            return paymentService.getPayments();
+        }
+        if (payments.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return payments;
     }
 }
