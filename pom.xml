@@ -48,7 +48,6 @@
             <modules>
                 <module>testDeploy</module>
                 <module>consumerService</module>
-                <module>userService</module>
                 <module>frontendService</module>
                 <module>paymentService</module>
                 <module>invoiceService</module>

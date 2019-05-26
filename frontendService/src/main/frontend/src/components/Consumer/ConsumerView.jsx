@@ -8,8 +8,9 @@ import { Route } from 'react-router-dom';
 import { OfferEdit } from './OfferEdit';
 import { ActionRow } from '../Layout/ActionRow';
 import { Action } from '../Layout/Action';
-import { OfferHistory } from '../Party/OfferHistory';
+import { OfferHistory } from '../Party/OfferList';
 import { AccountEdit } from '../Party/AccountEdit';
+import { Switch } from 'react-router-dom';
 
 export class ConsumerView extends React.Component {
   render() {
@@ -24,13 +25,30 @@ export class ConsumerView extends React.Component {
           <BreadCrumb first={true} Container={props => <PureLink to='/consumer' {...props} />}>
             Consumer
           </BreadCrumb>
-          <Route path='/consumer/offers/new' component={() => <BreadCrumb text="Offer" />} />
+          <Switch>
+            <Route path='/consumer/offers/new' component={() => <BreadCrumb text="Offer" />} />
+            <Route path='/consumer/offers-history' component={() => <BreadCrumb text="History" />} exact={true} />
+            <Route path='/consumer/account' component={() => <BreadCrumb text="Account" />} exact={true} />
+          </Switch>
         </PageHeader>
         <ConsumerNavigation />
         <Body>
-          <Route path='/consumer/offers-history' component={OfferHistory} exact={true} />
-          <Route path='/consumer/offers/new' component={OfferEdit} />
-          <Route path='/consumer/account' component={AccountEdit} exact={true} />
+          <Switch>
+            <Route
+              path='/consumer/offers-history'
+              /// consider this
+              // component={props => <OfferHistory {...props} buildHref={id => `/consumer/offers/${id}`} />}
+              component={OfferHistory}
+              exact={true} />
+            <Route
+              path='/consumer/offers/new'
+              component={OfferEdit}
+              exact={true} />
+            <Route
+              path='/consumer/account'
+              component={AccountEdit}
+              exact={true} />
+          </Switch>
         </Body>
       </Container>
     )

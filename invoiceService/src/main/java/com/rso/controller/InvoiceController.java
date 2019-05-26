@@ -20,6 +20,7 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
+  
     @GetMapping(path="/{invoiceId}")
     public ResponseEntity<?> getInvoiceInfo (@PathVariable final long invoiceId) {
         return invoiceService.getInvoiceById(invoiceId);
@@ -45,4 +46,3 @@ public class InvoiceController {
         return invoiceService.testInvoiceService();
     }
 }
-
