@@ -5,11 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import rso.dto.PaymentAddDto;
 import rso.dto.PaymentDto;
 import rso.exceptions.InvalidPaymentIdException;
 import rso.model.StatusType;
 import rso.service.PaymentService;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -40,5 +42,11 @@ public class PaymentController {
             return paymentService.getPaymentsWithStatus(status);
         }
         return paymentService.getPayments();
+    }
+
+    @PostMapping(path = "")
+    public @ResponseBody
+    PaymentDto addPayment(@RequestBody PaymentAddDto payment) throws ParseException {
+        return paymentService.addPayment(payment);
     }
 }
