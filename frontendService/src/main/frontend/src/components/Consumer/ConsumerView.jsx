@@ -26,7 +26,7 @@ export class ConsumerView extends React.Component {
             Consumer
           </BreadCrumb>
           <Switch>
-            <Route path='/consumer/offers/new' component={() => <BreadCrumb text="Offer" />} />
+            <Route path='/consumer/offers/new' component={() => <BreadCrumb text="Create offer" />} />
             <Route path='/consumer/offers-history' component={() => <BreadCrumb text="History" />} exact={true} />
             <Route path='/consumer/account' component={() => <BreadCrumb text="Account" />} exact={true} />
           </Switch>
