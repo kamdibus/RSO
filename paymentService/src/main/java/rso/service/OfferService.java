@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import rso.dto.OfferAddDto;
 import rso.dto.OfferDto;
+import rso.dto.OfferEditDto;
 import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
 import rso.model.StatusType;
@@ -90,5 +91,12 @@ public class OfferService {
     @Transactional
     public void deleteOffersForUser(Long userId) {
         offerRepository.deleteByUserId(userId);
+    }
+
+    public OfferDto editOffer(Long id, OfferEditDto editOfferDto) {
+        Offer offer = offerRepository.findById(id).get();
+        offer.setStatus(editOfferDto.getStatus());
+        offerRepository.save(offer);
+        return convertToDto(offer);
     }
 }

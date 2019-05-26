@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rso.dto.PaymentDto;
 import rso.exceptions.InvalidPaymentIdException;
-import rso.model.Payment;
 import rso.model.StatusType;
 import rso.service.PaymentService;
 

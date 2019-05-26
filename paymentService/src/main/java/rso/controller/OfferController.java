@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rso.dto.OfferAddDto;
 import rso.dto.OfferDto;
+import rso.dto.OfferEditDto;
 import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
 import rso.model.StatusType;
@@ -94,6 +95,12 @@ public class OfferController {
     public @ResponseBody
     OfferDto addOffer(@RequestBody OfferAddDto offer) throws ParseException {
         return offerService.addOffer(offer);
+    }
+
+    @PatchMapping(path = "{id}")
+    public @ResponseBody
+    OfferDto editOffer(@PathVariable final Long id, @RequestBody OfferEditDto offer){
+        return offerService.editOffer(id, offer);
     }
 }
 
