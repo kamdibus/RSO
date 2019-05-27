@@ -26,9 +26,9 @@ public class JpaDatabaseLoader implements CommandLineRunner {
         this.paymentRepository.save(new Payment(new Date() , StatusType.accepted));
         Payment payment = this.paymentRepository.findById((long) 1).get();
         this.offerRepository.save(new Offer(new Date(), new Date(), 1, 1, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
-        this.offerRepository.save(new Offer(new Date(), new Date(), 1, 1, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
-        this.offerRepository.save(new Offer(new Date(), new Date(), 1, 1, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
-        this.offerRepository.save(new Offer(new Date(), new Date(), 1, 1, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
-        this.offerRepository.save(new Offer(new Date(), new Date(), 1, 1, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
+        this.offerRepository.save(new Offer(new Date(), new Date(), 2, 2, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
+        this.offerRepository.save(new Offer(new Date(), new Date(), 3, 3, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
+        this.offerRepository.save(new Offer(new Date(), new Date(), 4, 4, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
+        this.offerRepository.save(new Offer(new Date(), new Date(), 5, 5, 12.112f, StatusType.accepted, new Payment(new Date() ,StatusType.pending)));
     }
 }

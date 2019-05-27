@@ -5,12 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import rso.dto.PaymentAddDto;
 import rso.dto.PaymentDto;
 import rso.exceptions.InvalidPaymentIdException;
-import rso.model.Payment;
 import rso.model.StatusType;
 import rso.service.PaymentService;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +28,7 @@ public class PaymentController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    PaymentDto getPaymentInfo (@PathVariable final long id) {
+    PaymentDto getPayment (@PathVariable final long id) {
        try {
            return paymentService.getPaymentForId(id);
        } catch (InvalidPaymentIdException e) {
@@ -34,12 +36,32 @@ public class PaymentController {
         }
     }
 
+    @PostMapping(path = "")
+    public @ResponseBody
+    PaymentDto addPayment(@RequestBody PaymentAddDto payment) throws ParseException {
+        return paymentService.addPayment(payment);
+    }
+
     @GetMapping(path="")
     public @ResponseBody
-    List<PaymentDto> getPatments (@RequestParam(required = false) StatusType status) {
-        if (status != null){
-            return paymentService.getPaymentsWithStatus(status);
+    List<PaymentDto> getPayments (@RequestParam(required = false) StatusType status, @RequestParam(required = false) Long userId) {
+        List<PaymentDto> payments = new ArrayList<PaymentDto>();
+        if (status != null && userId != null){
+            payments = paymentService.getPaymentsForUserWithStatus(userId, status);
+
         }
-        return paymentService.getPayments();
+        else if (status != null){
+            payments = paymentService.getPaymentsByStatus(status);
+        }
+        else if (userId != null){
+            payments = paymentService.getPaymentsForUser(userId);
+        }
+        else{
+            return paymentService.getPayments();
+        }
+        if (payments.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return payments;
     }
 }
