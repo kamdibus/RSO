@@ -8,29 +8,23 @@ spec:
   gateways:
   - http-gateway
   http:
-#  - match:
-#    - uri:
-#        exact: /
-#    - uri:
-#        exact: /callback
-#    - uri:
-#        prefix: /static
-#    - uri:
-#        regex: '^.*\.(ico|png|jpg)$'
-#    route:
-#    - destination:
-#        host: frontend
-#        port:
-#          number: 80
   - match:
     - uri:
         exact: /
     - uri:
+        exact: /callback
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80
+  - match:
+    - uri:
         regex: /test
-    - uri:
-        regex: /static
-    - uri:
-        regex: /consumer/*
     route:
     - destination:
         host: testdeploy-lb
