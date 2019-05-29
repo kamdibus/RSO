@@ -35,6 +35,15 @@ public class TestController {
                 .getBody();
     }
 
+    @GetMapping(path="/invoices")
+    public @ResponseBody
+    String getInvoiceTestString() {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(clusterIP + "/invoices/test",
+                String.class)
+                .getBody();
+    }
+
     @GetMapping(path="/testDeploy")
     public @ResponseBody
     String test() {
