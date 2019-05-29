@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - image: rsoprojectwut/paymentservice
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: payment-pod
           env:
             - name: CONSUMER_API_URL

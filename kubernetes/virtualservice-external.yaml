@@ -36,7 +36,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        exact: /consumer/payment/1
+        exact: /users.*
     route:
     - destination:
         host: consumer-lb
