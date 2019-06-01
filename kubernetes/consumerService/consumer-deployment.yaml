@@ -16,7 +16,7 @@ spec:
         app: consumer
     spec:
       containers:
-        - image: rsoprojectwut/consumerservice
+        - image: rsoprojectwut/consumerservice:1.0.0
           imagePullPolicy: Always
           name: consumer-pod
           ports:
