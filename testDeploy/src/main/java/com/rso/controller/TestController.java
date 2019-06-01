@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping(path="/test")
+@RequestMapping(path="api/test")
 public class TestController {
 
     public String clusterIP = "http://35.242.206.172";
