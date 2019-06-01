@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
-@RequestMapping(path="/invoices")
+@RequestMapping(path="api/invoices")
 public class InvoiceController {
 
     private InvoiceService invoiceService;

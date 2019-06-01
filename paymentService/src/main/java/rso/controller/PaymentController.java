@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/payments/")
+@RequestMapping(path="api/payments")
 public class PaymentController {
 
     private PaymentService paymentService;
