@@ -1,26 +1,28 @@
 package com.rso.controller;
 
 import com.rso.dto.InvoiceEntityDto;
-import com.rso.exceptions.InvalidInvoiceIdException;
 import com.rso.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping(path="/invoices")
+@RequestMapping(path="api/invoices")
 public class InvoiceController {
 
     private InvoiceService invoiceService;
 
     @Autowired
-    public InvoiceController(InvoiceService invoiceService) {
-        this.invoiceService = invoiceService;
-    }
+    public InvoiceController(InvoiceService invoiceService) { this.invoiceService = invoiceService; }
 
     @GetMapping(path="/{invoiceId}")
     public ResponseEntity<?> getInvoiceInfo (@PathVariable final long invoiceId) {
         return invoiceService.getInvoiceById(invoiceId);
+    }
+
+    @PostMapping(path="/")
+    public ResponseEntity<?> createNewInvoice(@RequestBody InvoiceEntityDto invoiceDto) {
+        return invoiceService.createNewInvoice(invoiceDto);
     }
 
     @GetMapping(value = "/users/{userId}")
@@ -38,9 +40,7 @@ public class InvoiceController {
         return invoiceService.editInvoiceById(newData, invoiceId);
     }
 
-    @PutMapping(value = "/test")
-    public ResponseEntity<?> testInvoiceService() {
-        return invoiceService.testInvoiceService();
-    }
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> testInvoiceService() { return invoiceService.testInvoiceService(); }
 }
 

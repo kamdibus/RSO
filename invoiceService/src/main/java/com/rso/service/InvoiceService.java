@@ -42,7 +42,7 @@ public class InvoiceService {
     }
 
     public ResponseEntity<?> getInvoiceById(long invoiceId) {
-        Invoice invoiceForId = invoiceRepository.findForId(invoiceId);
+        Invoice invoiceForId = invoiceRepository.findFirstById(invoiceId);
         return mapInvoiceToDto(invoiceForId, InvoiceEntityDto.class);
     }
 
@@ -64,5 +64,10 @@ public class InvoiceService {
 
     public ResponseEntity<?> testInvoiceService() {
         return new ResponseEntity<>("Invoice service OK", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> createNewInvoice(InvoiceEntityDto invoiceDto) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+//        return new ResponseEntity<>("Created new Invoice", HttpStatus.CREATED);
     }
 }

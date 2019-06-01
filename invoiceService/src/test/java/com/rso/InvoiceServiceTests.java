@@ -45,7 +45,7 @@ public class InvoiceServiceTests {
         final long invoiceId = 1;
         final String invoiceData = "data";
         final Invoice testInvoice = new Invoice(invoiceId, invoiceData);
-        when(invoiceRepository.findForId(invoiceId)).thenReturn(testInvoice);
+        when(invoiceRepository.findFirstById(invoiceId)).thenReturn(testInvoice);
         when(dtoHandler.mapEntityToDto(testInvoice, InvoiceEntityDto.class)).thenReturn(new InvoiceEntityDto());
 
         //when

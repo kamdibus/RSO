@@ -5,5 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
-    Invoice findForId(@Param("invoiceId") long invoiceId);
+
+    Invoice findFirstById(@Param("id") long id);
 }
