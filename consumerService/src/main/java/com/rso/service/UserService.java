@@ -47,7 +47,7 @@ public class UserService {
             T mappedDto = dtoHandler.mapEntityToDto(userForId, dtoType);
             return new ResponseEntity<>(mappedDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
