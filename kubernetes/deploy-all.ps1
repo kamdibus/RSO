@@ -9,3 +9,4 @@ kubectl apply -f invoice/invoice-lb.yaml
 kubectl apply -f frontend/frontend.yaml
 kubectl apply -f http-gateway.yaml
 kubectl apply -f virtualservice-external.yaml
+kubectl get pods --watch
