@@ -47,4 +47,14 @@ public class UserController  {
         return userService.getPaymentsForUserId(userId, status);
     }
 
+    @PostMapping(value = "/new")
+    public ResponseEntity<?> saveNewUser(@RequestBody UserEntityDto userDto) {
+        return userService.createNewUserAccount(userDto);
+    }
+
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> testMicroService() {
+        return userService.testService();
+    }
+
 }

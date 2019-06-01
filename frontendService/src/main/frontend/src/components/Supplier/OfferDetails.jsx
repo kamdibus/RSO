@@ -24,7 +24,6 @@ export class OfferDetails extends React.Component {
 
   render() {
     const { offer, loading } = this.state
-    const { offerId } = this.props
     
     const fields = Object
       .entries(flattenObject(offer || {}))
@@ -34,17 +33,11 @@ export class OfferDetails extends React.Component {
         value
       }))
 
-    const offerIdField = {
-      name: 'offerId',
-      label: "offer id",
-      value: offerId
-    }
-
     return (
       <Container >
         {loading && <LoadingOverlay />}
         <OfferDetailsSection
-          fields={fields.concat(offerIdField)}
+          fields={fields}
         />
         <ActionSection onAccept={this.onOfferAccept} onReject={this.onOfferReject} />
         <Snackbar ref={this.snackbar} />

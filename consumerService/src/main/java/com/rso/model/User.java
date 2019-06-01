@@ -1,10 +1,12 @@
 package com.rso.model;
 
 import com.rso.dto.UserEntityDto;
+import jdk.nashorn.internal.runtime.options.Option;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -45,8 +47,7 @@ public class User {
 
     public User() {}
 
-    public User(UserEntityDto newData, long userId) {
-        this.id = userId;
+    public User(UserEntityDto newData) {
         this.name = newData.getName();
         this.address = newData.getAddress();
         this.nipNumber = newData.getNipNumber();
@@ -55,7 +56,5 @@ public class User {
         this.accountNumber = newData.getAccountNumber();
         this.peselNumber = newData.getPeselNumber();
         this.joinDate = newData.getJoinDate();
-        this.userType = UserType.valueOf(newData.getUserType());
-        this.userStatus = UserStatus.valueOf(newData.getUserStatus());
     }
 }

@@ -1,5 +1,4 @@
-FROM openjdk:8-jre-alpine
-FROM node:10-alpine
+FROM tiangolo/node-frontend:10 as build-stage
 
 WORKDIR /app
 COPY src/main/frontend/. /app
@@ -7,8 +6,6 @@ RUN npm install
 RUN chmod a+x /app/node_modules/.bin/react-scripts
 RUN npm run build
 
-ENTRYPOINT ["/usr/bin/java", "-jar", "/tmp/app/app.jar"]
-
-ADD target/lib           /tmp/app/lib
-ARG JAR_FILE
-ADD target/${JAR_FILE} /tmp/app/app.jar
+FROM nginx:1.15
+COPY --from=build-stage /app/build/ /usr/share/nginx/html
+COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf

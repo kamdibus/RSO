@@ -20,11 +20,7 @@ export class SupplierView extends React.Component {
             Home
           </BreadCrumb>
         </TopHeader>
-        <PageHeader>
-          <BreadCrumb first={true} Container={props => <PureLink to='/supplier' {...props} />}>
-            Supplier
-          </BreadCrumb>
-        </PageHeader>
+        <Header />
         <SupplierNavigation />
         <Route
           path='/supplier/offers'
@@ -44,6 +40,37 @@ export class SupplierView extends React.Component {
       </Container>
     )
   }
+}
+
+function Header() {
+  return (
+    <PageHeader>
+      <BreadCrumb first={true} Container={props => <PureLink to='/supplier' {...props} />}>
+        Supplier
+      </BreadCrumb>
+      <Route
+        path='/supplier/offers'
+        component={() => (
+          <BreadCrumb
+            text="Offers"
+            Container={props => <PureLink to='/supplier/offers' {...props} />}
+          />
+        )}
+      />
+      <Route path='/supplier/offers/:id' component={({ match }) => <BreadCrumb text={match.params.id} />} />
+      <Route
+        path='/supplier/offers-history'
+        component={() => (
+          <BreadCrumb
+            text="History"
+            Container={props => <PureLink to='/supplier/offers-history' {...props} />}
+          />
+        )}
+      />
+      <Route path='/supplier/offers-history/:id' component={({ match }) => <BreadCrumb text={match.params.id} />} />
+      <Route path='/supplier/account' component={() => <BreadCrumb text="Account" />} />
+    </PageHeader>
+  )
 }
 
 const Container = styled.div`
