@@ -78,6 +78,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -116,5 +120,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

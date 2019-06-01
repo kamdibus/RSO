@@ -1,21 +1,22 @@
 package com.rso;
 
-import com.rso.exceptions.InvalidInvoiceIdException;
+import com.rso.dto.InvoiceEntityDto;
 import com.rso.model.Invoice;
 import com.rso.repository.InvoiceRepository;
 import com.rso.service.InvoiceService;
+import com.rso.util.DtoHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -27,41 +28,30 @@ public class InvoiceServiceTests {
     @Mock
     InvoiceRepository invoiceRepository;
 
+    @Mock
+    DtoHandler dtoHandler;
+
     @InjectMocks
     private InvoiceService invoiceService;
 
-	@Test
-	public void contextLoads() {
+    @Test
+    public void contextLoads() {
 
-	}
-
-	@Test (expected = InvalidInvoiceIdException.class)
-    public void givenInvalidIdShouldThrowException() throws InvalidInvoiceIdException {
-
-	    //given
-        final long invalidId = -1;
-
-        //when
-        invoiceService.getInvoiceById(invalidId);
     }
 
     @Test
-    public void givenValidIdShouldReturnInvoice() throws InvalidInvoiceIdException {
-
-	    //given
-        final long validId = 1;
-        final String data = "DATA";
-        final Invoice validInvoice = new Invoice(validId, data);
-        final Optional<Invoice> validInvoiceOptional = Optional.of(validInvoice);
-        when(invoiceRepository.findById(validId)).thenReturn(validInvoiceOptional);
+    public void givenValidInvoiceIdShouldReturnInvoiceEntityDto() {
+        //given
+        final long invoiceId = 1;
+        final String invoiceData = "data";
+        final Invoice testInvoice = new Invoice(invoiceId, invoiceData);
+        when(invoiceRepository.findFirstById(invoiceId)).thenReturn(testInvoice);
+        when(dtoHandler.mapEntityToDto(testInvoice, InvoiceEntityDto.class)).thenReturn(new InvoiceEntityDto());
 
         //when
-        final Invoice fetchedInvoice = invoiceService.getInvoiceById(validId);
-
+        final ResponseEntity<?> validResponse = invoiceService.getInvoiceById(invoiceId);
+        final Object responseBody = validResponse.getBody();
         //then
-        assertThat(fetchedInvoice.getId()).isEqualTo(validId);
+        assertThat(responseBody, instanceOf(InvoiceEntityDto.class));
     }
-
-
-
 }
