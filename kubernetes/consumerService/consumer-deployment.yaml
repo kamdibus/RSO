@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - image: rsoprojectwut/consumerservice
-          imagePullPolicy: IfNotPresent
-          name: consumer
+          imagePullPolicy: Always
+          name: consumer-pod
           ports:
             - containerPort: 8080

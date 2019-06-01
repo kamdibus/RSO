@@ -12,9 +12,9 @@ public class OfferAddDto {
 
     private float discount;
 
-    private long invoice_id;
+    private long invoiceId;
 
-    private Set<Payment> payments;
+    private long userId;
 
     public void setId(long id){
         this.id = id;
@@ -24,12 +24,20 @@ public class OfferAddDto {
         return this.id;
     }
 
-    public void setInvoice_id(long invoice_id){
-        this.invoice_id = invoice_id;
+    public void setInvoiceId(long invoiceId){
+        this.invoiceId = invoiceId;
     }
 
-    public long getInvoice_id(){
-        return this.invoice_id;
+    public long getInvoiceId(){
+        return this.invoiceId;
+    }
+
+    public void setUserId(long userId){
+        this.userId = userId;
+    }
+
+    public long getUserId(){
+        return this.userId;
     }
 
     public void setDiscount(float discount){

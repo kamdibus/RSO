@@ -1,15 +1,49 @@
 package com.rso.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.rso.model.Offer;
+import com.rso.model.StatusType;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import java.text.ParseException;
+import java.util.Date;
+
 public class PaymentDto {
     private long id;
-    private float amount;
+
+    private StatusType status;
+
+    private Date paymentDate;
+
+    private long offerId;
+
+    public void setId(long id){
+        this.id = id;
+    }
+
+    public long getId(){
+        return this.id;
+    }
+
+    public void setCreationDate(Date paymentDate){
+        this.paymentDate = new Date();
+    }
+
+    public Date getCreationDate(String timezone) throws ParseException {
+        return this.paymentDate;
+    }
+
+    public void setStatus(StatusType status){
+        this.status = status;
+    }
+
+    public StatusType getStatus(){
+        return this.status;
+    }
+
+    public void setOfferId(Offer offer){
+        this.offerId= offer.getId();
+    }
+
+    public long getOfferId(){
+        return this.offerId;
+    }
 }

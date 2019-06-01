@@ -23,7 +23,23 @@ export class AdminView extends React.Component {
           <BreadCrumb first={true} Container={props => <PureLink to='/admin' {...props} />}>
             Admin
           </BreadCrumb>
-          <Route path='/admin/users' component={() => <BreadCrumb text="Users" />} />
+          <Route
+            path='/admin/users'
+            component={() => (
+              <BreadCrumb
+                text="Users"
+                Container={props => <PureLink to='/admin/users' {...props} />}
+              />
+            )}
+          />
+          <Route
+            path='/admin/users/:id'
+            component={({ match }) => (
+              <BreadCrumb
+                text={match.params.id}
+              />
+            )}
+          />
         </PageHeader>
         <AdminNavigation />
         <Body>

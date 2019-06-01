@@ -3,8 +3,10 @@ package rso.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import rso.dto.OfferAddDto;
 import rso.dto.OfferDto;
+import rso.dto.OfferEditDto;
 import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
 import rso.model.StatusType;
@@ -35,6 +37,7 @@ public class OfferService {
         ModelMapper modelMapper = new ModelMapper();
         Offer offer = modelMapper.map(offerAddDto, Offer.class);
         offer.setCreationDate(new Date());
+        offer.setExpirationDate(new Date());
         offer.setStatus(StatusType.pending);
         return offer;
     }
@@ -81,4 +84,19 @@ public class OfferService {
         return convertToDto(offerCreated);
     }
 
+    public void deleteOffer(Long offerId) throws InvalidOfferIdException {
+        offerRepository.deleteById(offerId);
+    }
+
+    @Transactional
+    public void deleteOffersForUser(Long userId) {
+        offerRepository.deleteByUserId(userId);
+    }
+
+    public OfferDto editOffer(Long id, OfferEditDto editOfferDto) {
+        Offer offer = offerRepository.findById(id).get();
+        offer.setStatus(editOfferDto.getStatus());
+        offerRepository.save(offer);
+        return convertToDto(offer);
+    }
 }

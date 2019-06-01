@@ -48,7 +48,6 @@
             <modules>
                 <module>testDeploy</module>
                 <module>consumerService</module>
-                <module>userService</module>
                 <module>frontendService</module>
                 <module>paymentService</module>
                 <module>invoiceService</module>
@@ -157,7 +156,7 @@
                             </executions>
                             <configuration>
                                 <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-                                <tag>latest</tag>
+                                <tag>1.0.0</tag>
                                 <buildArgs>
                                     <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                                 </buildArgs>

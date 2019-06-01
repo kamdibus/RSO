@@ -26,6 +26,9 @@ public class Offer {
     @DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date creationDate;
 
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    private Date expirationDate;
+
     private long invoiceId;
     
     private long userId;
@@ -33,8 +36,9 @@ public class Offer {
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
-    public Offer(Date creationDate, long userId,  long invoiceId, float discount, StatusType status, Payment... payments) {
+    public Offer(Date creationDate, Date expirationDate, long userId,  long invoiceId, float discount, StatusType status, Payment... payments) {
         this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
         this.userId = userId;
         this.invoiceId = invoiceId;
         this.status = status;
@@ -59,6 +63,14 @@ public class Offer {
 
     public Date getCreationDate(){
         return this.creationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate){
+        this.expirationDate = expirationDate;
+    }
+
+    public Date getExpirationDate(){
+        return this.expirationDate;
     }
 
     public void setInvoiceId(long invoiceId){

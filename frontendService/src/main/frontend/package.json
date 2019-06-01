@@ -1,5 +1,6 @@
 {
   "name": "liquify",
+  "homepage": "http://drrefactor.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,11 +15,13 @@
     "@types/react-router": "^4.4.5",
     "@types/styled-components": "^4.1.12",
     "auth0-js": "^9.10.2",
+    "axios": "^0.18.0",
     "color": "^3.1.0",
     "formik": "^1.5.1",
     "history": "^4.9.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
+    "node-pre-gyp": "0.13.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-router": "^5.0.0",
@@ -26,6 +29,9 @@
     "react-scripts": "2.1.8",
     "styled-components": "^4.2.0",
     "typescript": "3.3.4000"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.19.1"
   },
   "scripts": {
     "start": "react-scripts start",

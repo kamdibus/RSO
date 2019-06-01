@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: external-services
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        regex: api/test.*
+    route:
+    - destination:
+        host: testdeploy-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        regex: api/users.*
+    route:
+    - destination:
+        host: consumer-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        regex: api/payments.*
+    route:
+    - destination:
+        host: payment-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        regex: api/invoice.*
+    route:
+    - destination:
+        host: invoice-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        regex: /.*
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80

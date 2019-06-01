@@ -1,18 +1,23 @@
 export interface OfferPayload {
-  expirationDate: string;
-  supplier: string;
-  ratio: number;
+  discount: number;
   invoiceId: number;
+  userId: number;
   id?: number;
 }
 
-export interface OfferListResponse {
-  expirationDate: string;
-  supplier: string;
-  ratio: number;
-  invoiceId: number;
+export interface OfferResponse {
   id: number;
-  priceGross: number;
+  discount: number;
+  status: string;
+  creationDate: string;
+  expirationDate: string;
+  invoiceId: number;
+  userId: number;
+  payments: [{
+    id: number;
+    status: string;
+    offerId: number;
+  }]
 }
 
 export interface OfferResponse {
