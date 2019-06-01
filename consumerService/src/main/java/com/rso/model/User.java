@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 @Data
 public class User {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "users_sequence";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -37,10 +39,6 @@ public class User {
 
     public User(String nipNumber) {
         this.nipNumber = nipNumber;
-    }
-
-    public User(long id) {
-        this.id = id;
     }
 
     public User() {}

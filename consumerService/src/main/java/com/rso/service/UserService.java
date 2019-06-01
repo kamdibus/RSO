@@ -5,6 +5,7 @@ import com.rso.model.User;
 import com.rso.model.UserStatus;
 import com.rso.repository.UserRepository;
 import com.rso.util.DtoHandler;
+import com.rso.util.MongoSequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,8 @@ public class UserService {
 
     private DtoHandler dtoHandler;
 
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
     @Value("${payment.api.url}")
     private String apiPaymentService;
 
@@ -31,9 +34,10 @@ public class UserService {
 
 
     @Autowired
-    public UserService (UserRepository userRepository, DtoHandler dtoHandler) {
+    public UserService (UserRepository userRepository, DtoHandler dtoHandler, MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.userRepository = userRepository;
         this.dtoHandler = dtoHandler;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
 
@@ -125,8 +129,13 @@ public class UserService {
 
     public ResponseEntity<?> createNewUserAccount(UserEntityDto userDto) {
         User newUser = this.dtoHandler.checkDtoEnumFields(userDto);
-        this.userRepository.save(newUser);
+        this.saveUserInMongodb(newUser);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void saveUserInMongodb(User newUser) {
+        newUser.setId(mongoSequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
+        userRepository.save(newUser);
     }
 
     public ResponseEntity<?> testService() {
