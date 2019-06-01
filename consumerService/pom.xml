@@ -109,6 +109,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
                     <repository>rsoprojectwut/consumerservice</repository>
+                    <tag>${imageTag}</tag>
                 </configuration>
             </plugin>
             <plugin>
