@@ -26,11 +26,9 @@ spec:
     - uri:
         exact: /
     - uri:
-        regex: /test
+        regex: /test.*
     - uri:
         regex: /static
-    - uri:
-        regex: /consumer/*
     route:
     - destination:
         host: testdeploy-lb
@@ -38,7 +36,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        exact: /consumer/payment/1
+        regex: /users.*
     route:
     - destination:
         host: consumer-lb
@@ -46,7 +44,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        exact: /payments/
+        regex: /payments.*
     route:
     - destination:
         host: payment-lb
