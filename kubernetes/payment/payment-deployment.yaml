@@ -16,7 +16,7 @@ spec:
         app: payment
     spec:
       containers:
-        - image: rsoprojectwut/paymentservice
+        - image: rsoprojectwut/paymentservice:1.0.0
           imagePullPolicy: Always
           name: payment-pod
           env:

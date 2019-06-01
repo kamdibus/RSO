@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="api/offers")
+@RequestMapping(path="/api/offers")
 public class OfferController {
 
     private OfferService offerService;
