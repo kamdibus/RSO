@@ -13,17 +13,17 @@ export const SupplierService = {
   },
   postOffer: async function(offer: OfferPayload): Promise<OfferResponse> {
     return Axios
-      .post(OFFERS_URL + '/offers/', offer)
+      .post(OFFERS_URL + '/', offer)
       .then(r => r.data)
   },
   getOffers: async function(): Promise<OfferResponse[]> {
     return Axios
-      .get(OFFERS_URL + '/offers/')
+      .get(OFFERS_URL + '/')
       .then(r => r.data)
   },
   getOffersHistory: async function(): Promise<OfferResponse[]> {
     return Axios
-      .get(OFFERS_URL + '/offers/')
+      .get(OFFERS_URL + '/')
       .then(r => r.data)
   }
 }
