@@ -4,11 +4,11 @@ class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: 'dev-fvyydqa0.eu.auth0.com',
-      audience: 'https://dev-fvyydqa0.eu.auth0.com/userinfo',
       clientID: 'qoWgjWbU-A8ycOm7jKZcqiL4h2tyE7-Y',
-      redirectUri: `${window.location.hostname}/callback`,
+      redirectUri: `${window.location.origin}/callback?redirect_to=${window.location.pathname}`,
       responseType: 'token id_token',
-      scope: 'openid profile'
+      scope: 'openid profile',
+      leeway: 60
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -25,6 +25,10 @@ class Auth {
 
   getIdToken() {
     return this.idToken;
+  }
+
+  getAccessToken() {
+    return this.accessToken;
   }
 
   isAuthenticated() {
@@ -51,14 +55,14 @@ class Auth {
   setSession(authResult) {
     this.idToken = authResult.idToken;
     this.profile = authResult.idTokenPayload;
+    this.accessToken = authResult.accessToken;
     // set the time that the id token will expire at
     this.expiresAt = authResult.idTokenPayload.exp * 1000;
   }
 
   signOut() {
     this.auth0.logout({
-      returnTo: 'http://localhost:3000',
-      clientID: 'PVafIu9Q5QN65DiPByAFvCCJryY7n432',
+      return_to: `${window.location.origin}`,
     });
   }
 
@@ -73,11 +77,11 @@ class Auth {
   }
 
   getAuthHeaders() {
-    const token = this.getIdToken();
+    const token = this.getAccessToken();
     if (token == null) {
       return {}
     }
-    return { 'Authorization': `Bearer ${this.getIdToken()}` };
+    return { 'Authorization': `Bearer ${token}` };
   }
 }
 

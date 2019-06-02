@@ -16,18 +16,18 @@ class App extends Component {
 
   async componentDidMount() {
     if (this.props.location.pathname === '/callback') {
-      this.setState({checkingSession:false});
+      this.setState({ checkingSession:false });
       return;
     }
-    try {
-      await auth0Client.silentAuth();
-      this.forceUpdate();
-    }
-    catch (err) {
-      auth0Client.signIn();
-      console.log(err.error);
-    }
-    this.setState({checkingSession:false});
+
+    // try {
+    //   await auth0Client.silentAuth();
+    //   this.forceUpdate();
+    // }
+    // catch (err) {
+    //   console.log(err);
+    // }
+    this.setState({ checkingSession:false });
   }
 
   render() {
@@ -35,7 +35,7 @@ class App extends Component {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <Container>
           <Body>
-            <Router />
+            <Router checkingSession={this.state.checkingSession} />
           </Body>
         </Container>
       </MuiPickersUtilsProvider>
