@@ -1,9 +1,17 @@
 package rso.service;
 
+import com.auth0.client.auth.AuthAPI;
+import com.auth0.exception.APIException;
+import com.auth0.exception.Auth0Exception;
+import com.auth0.json.auth.UserInfo;
+import com.auth0.net.Request;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import rso.dto.OfferAddDto;
 import rso.dto.OfferDto;
 import rso.dto.OfferEditDto;
@@ -14,6 +22,7 @@ import rso.repository.OfferRepository;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +30,18 @@ import java.util.stream.Collectors;
 public class OfferService {
 
     private OfferRepository offerRepository;
+
+    @Value("${auth0.domain}")
+    private String domain;
+
+    @Value("${auth0.clientId}")
+    private String clientId;
+
+    @Value("${auth0.clientSecret}")
+    private String clientSecret;
+
+    @Value("${auth0.userMetadataUrl}")
+    private String metaUrl;
 
     @Autowired
     public OfferService(OfferRepository offerRepository) {
@@ -42,59 +63,74 @@ public class OfferService {
         return offer;
     }
 
-    public OfferDto getOfferForId(long id) throws InvalidOfferIdException {
+    private Long getUserId(String token){
+        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
+        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
+        UserInfo info = null;
+        try {
+            info = request2.execute();
+        } catch (APIException exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } catch (Auth0Exception exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
+        Long userId = Long.parseLong((String) userMeta.get("nip"));
+        return userId;
+    }
+
+    public OfferDto getOfferForId(long id, String token) throws InvalidOfferIdException {
+        Long userId = getUserId(token);
         if (!offerRepository.findById(id).isPresent()) {
             throw new InvalidOfferIdException();
         }
         Offer offer = offerRepository.findById(id).get();
+        if (userId != offer.getUserId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         return convertToDto(offer);
     }
 
-    public List<OfferDto> getOffers() {
-        List<Offer> offers = (List<Offer>) offerRepository.findAll();
-        return offers.stream()
-                .map(post -> convertToDto(post))
-                .collect(Collectors.toList());
-    }
-
-    public List<OfferDto> getOffersByStatus(StatusType statusType) {
-        List<Offer> offers = (List<Offer>) offerRepository.findByStatus(statusType);
-        return offers.stream()
-                .map(post -> convertToDto(post))
-                .collect(Collectors.toList());
-    }
-
-    public List<OfferDto> getOffersForUser(Long userId) {
+    public List<OfferDto> getOffers(String token) {
+        Long userId = getUserId(token);
         List<Offer> offers = (List<Offer>) offerRepository.findByUserId(userId);
         return offers.stream()
                 .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
     }
 
-    public List<OfferDto> getOffersForUserWithStatus(Long userId, StatusType statusType) {
+    public List<OfferDto> getOffersByStatus(StatusType statusType, String token) {
+        Long userId = getUserId(token);
         List<Offer> offers = (List<Offer>) offerRepository.findByUserIdAndStatus(userId, statusType);
         return offers.stream()
                 .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
     }
 
-    public OfferDto addOffer(OfferAddDto offerDto) throws ParseException {
+    public OfferDto addOffer(OfferAddDto offerDto, String token) throws ParseException {
         Offer offer = convertToEntity(offerDto);
+        Long userId = getUserId(token);
+        offer.setUserId(userId);
         Offer offerCreated = offerRepository.save(offer);
         return convertToDto(offerCreated);
     }
 
-    public void deleteOffer(Long offerId) throws InvalidOfferIdException {
+    public void deleteOffer(Long offerId, String token) throws InvalidOfferIdException {
         offerRepository.deleteById(offerId);
     }
 
     @Transactional
-    public void deleteOffersForUser(Long userId) {
+    public void deleteOffersForUser(String token) {
+        Long userId = getUserId(token);
         offerRepository.deleteByUserId(userId);
     }
 
-    public OfferDto editOffer(Long id, OfferEditDto editOfferDto) {
+    public OfferDto editOffer(Long id, OfferEditDto editOfferDto, String token) {
+        Long userId = getUserId(token);
         Offer offer = offerRepository.findById(id).get();
+        if (offer.getUserId() != userId){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         offer.setStatus(editOfferDto.getStatus());
         offerRepository.save(offer);
         return convertToDto(offer);

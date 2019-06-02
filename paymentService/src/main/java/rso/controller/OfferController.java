@@ -1,9 +1,11 @@
 package rso.controller;
 
+import com.auth0.exception.Auth0Exception;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,6 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 @Controller
 @RequestMapping(path="api/offers")
 public class OfferController {
@@ -42,9 +45,9 @@ public class OfferController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    OfferDto getOfferInfo (@PathVariable final long id) {
+    OfferDto getOfferInfo (@PathVariable final long id, @RequestHeader("authorization") String token) {
         try {
-            return offerService.getOfferForId(id);
+            return offerService.getOfferForId(id, token);
         } catch (InvalidOfferIdException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No offer for this id", e);
         }
@@ -52,22 +55,14 @@ public class OfferController {
 
     @GetMapping(path="")
     public @ResponseBody
-    List<OfferDto> getOffers (@RequestParam(required = false) StatusType status, @RequestParam(required = false) Long userId) {
+    List<OfferDto> getOffers (@RequestParam(required = false) StatusType status, @RequestHeader("authorization") String token) throws Auth0Exception {
         List<OfferDto> offers = new ArrayList<OfferDto>();
-        if (status != null && userId != null){
-            offers = offerService.getOffersForUserWithStatus(userId, status);
-
+        if (status != null) {
+            offers = offerService.getOffersByStatus(status, token);
+        } else {
+        return offerService.getOffers(token);
         }
-        else if (status != null){
-            offers = offerService.getOffersByStatus(status);
-        }
-        else if (userId != null){
-            offers = offerService.getOffersForUser(userId);
-        }
-        else{
-            return offerService.getOffers();
-        }
-        if (offers.isEmpty()){
+        if (offers.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return offers;
@@ -75,9 +70,9 @@ public class OfferController {
 
     @DeleteMapping(path = "{id}")
     public @ResponseBody
-    ResponseEntity deleteOffer(@PathVariable final long id){
+    ResponseEntity deleteOffer(@PathVariable final long id, @RequestHeader("authorization") String token){
         try {
-            offerService.deleteOffer(id);
+            offerService.deleteOffer(id, token);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (InvalidOfferIdException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No offer for this id", e);
@@ -86,21 +81,22 @@ public class OfferController {
 
     @DeleteMapping(path = "")
     public @ResponseBody
-    ResponseEntity deleteOffersForUser(@RequestParam Long userId){
-        offerService.deleteOffersForUser(userId);
+    ResponseEntity deleteOffersForUser(@RequestHeader("authorization") String token){
+        offerService.deleteOffersForUser(token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(path = "")
     public @ResponseBody
-    OfferDto addOffer(@RequestBody OfferAddDto offer) throws ParseException {
-        return offerService.addOffer(offer);
+    OfferDto addOffer(@RequestBody OfferAddDto offer, @RequestHeader("authorization") String token) throws ParseException {
+
+        return offerService.addOffer(offer, token);
     }
 
     @PatchMapping(path = "{id}")
     public @ResponseBody
-    OfferDto editOffer(@PathVariable final Long id, @RequestBody OfferEditDto offer){
-        return offerService.editOffer(id, offer);
+    OfferDto editOffer(@PathVariable final Long id, @RequestBody OfferEditDto offer,  @RequestHeader("authorization") String token){
+        return offerService.editOffer(id, offer, token);
     }
 }
 

@@ -28,9 +28,9 @@ public class PaymentController {
 
     @GetMapping(path="{id}")
     public @ResponseBody
-    PaymentDto getPayment (@PathVariable final long id) {
+    PaymentDto getPayment (@PathVariable final long id, @RequestHeader("authorization") String token) {
        try {
-           return paymentService.getPaymentForId(id);
+           return paymentService.getPaymentForId(id, token);
        } catch (InvalidPaymentIdException e) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No payment for this id", e);
         }
@@ -38,26 +38,19 @@ public class PaymentController {
 
     @PostMapping(path = "")
     public @ResponseBody
-    PaymentDto addPayment(@RequestBody PaymentAddDto payment) throws ParseException {
-        return paymentService.addPayment(payment);
+    PaymentDto addPayment(@RequestBody PaymentAddDto payment, @RequestHeader("authorization") String token) throws ParseException {
+        return paymentService.addPayment(payment, token);
     }
 
     @GetMapping(path="")
     public @ResponseBody
-    List<PaymentDto> getPayments (@RequestParam(required = false) StatusType status, @RequestParam(required = false) Long userId) {
+    List<PaymentDto> getPayments (@RequestParam(required = false) StatusType status, @RequestHeader("authorization") String token) {
         List<PaymentDto> payments = new ArrayList<PaymentDto>();
-        if (status != null && userId != null){
-            payments = paymentService.getPaymentsForUserWithStatus(userId, status);
-
-        }
-        else if (status != null){
-            payments = paymentService.getPaymentsByStatus(status);
-        }
-        else if (userId != null){
-            payments = paymentService.getPaymentsForUser(userId);
+        if (status != null){
+            payments = paymentService.getPaymentsByStatus(status, token);
         }
         else{
-            return paymentService.getPayments();
+            return paymentService.getPayments(token);
         }
         if (payments.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
