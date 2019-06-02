@@ -4,7 +4,6 @@ import Router from './Router';
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import { withRouter } from 'react-router';
-import auth0Client from './backend/auth/auth0';
 
 class App extends Component {
   constructor(props) {
