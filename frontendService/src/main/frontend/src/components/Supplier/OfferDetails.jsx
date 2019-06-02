@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { LoadingOverlay } from '../common/Loading/Overlay';
 import { ActionSection } from '../Consumer/ActionSection';
 import { Snackbar } from '../common/Snackbar'
+import { SupplierService } from '../../backend/supplier/service/supplier';
 
 export class OfferDetails extends React.Component {
   constructor(props) {
@@ -46,11 +47,27 @@ export class OfferDetails extends React.Component {
   }
 
   onOfferAccept = () => {
-    this.openSnackbar("Offer accepted")
+    const { offerId } = this.props
+    SupplierService
+      .acceptOffer(offerId)
+      .then(() => {
+        this.openSnackbar("Offer accepted")
+      })
+      .catch(() => {
+        this.openSnackbar("Offer accepting error")
+      })
   }
 
   onOfferReject = () => {
-    this.openSnackbar("Offer rejected")
+    const { offerId } = this.props
+    SupplierService
+      .rejectOffer(offerId)
+      .then(() => {
+        this.openSnackbar("Offer rejected")
+      })
+      .catch(() => {
+        this.openSnackbar("Offer rejecting error")
+      })
   }
 
   openSnackbar = (text) => {

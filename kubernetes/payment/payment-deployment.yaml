@@ -19,8 +19,11 @@ spec:
         - image: rsoprojectwut/paymentservice:1.0.0
           imagePullPolicy: Always
           name: payment-pod
-          env:
-            - name: CONSUMER_API_URL
-              value: "http://consumer"
           ports:
             - containerPort: 8080
+          env:
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: password
