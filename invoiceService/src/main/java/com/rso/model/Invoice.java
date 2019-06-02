@@ -1,5 +1,6 @@
 package com.rso.model;
 
+import com.rso.dto.InvoiceEntityDto;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,4 +22,8 @@ public class Invoice {
 
     public Invoice() {}
 
+    public Invoice(InvoiceEntityDto newData, long invoiceId) {
+        this.id = invoiceId;
+        this.data = newData.getData();
+    }
 }

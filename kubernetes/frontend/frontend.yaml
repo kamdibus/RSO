@@ -19,7 +19,7 @@ spec:
         version: white
     spec:
       containers:
-        - image: rsoprojectwut/frontendservice
+        - image: rsoprojectwut/frontendservice:1.0.0
           imagePullPolicy: Always
           name: frontend
           ports:
