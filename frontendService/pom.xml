@@ -20,6 +20,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
                     <repository>rsoprojectwut/frontendservice</repository>
+                    <tag>${imageTag}</tag>
                 </configuration>
             </plugin>
             <plugin>

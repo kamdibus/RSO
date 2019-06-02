@@ -16,7 +16,7 @@ spec:
         app: testdeploy
     spec:
       containers:
-        - image: rsoprojectwut/testdeploy
+        - image: rsoprojectwut/testdeploy:1.0.0
           imagePullPolicy: Always
           name: testdeploy-pod
           env:

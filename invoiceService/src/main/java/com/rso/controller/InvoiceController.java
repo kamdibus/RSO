@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping(path="api/invoices")
+@RequestMapping(path="/api/invoices")
 public class InvoiceController {
 
     private InvoiceService invoiceService;
