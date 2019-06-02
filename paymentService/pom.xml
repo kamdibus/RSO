@@ -110,6 +110,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
                     <repository>rsoprojectwut/paymentservice</repository>
+                    <tag>${imageTag}</tag>
                 </configuration>
             </plugin>
             <plugin>

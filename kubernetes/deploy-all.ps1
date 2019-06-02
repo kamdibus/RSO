@@ -4,6 +4,9 @@ kubectl apply -f consumerService/consumer-deployment.yaml
 kubectl apply -f consumerService/consumer-lb.yaml
 kubectl apply -f payment/payment-deployment.yaml
 kubectl apply -f payment/payment-lb.yaml
+kubectl apply -f invoice/invoice-deployment.yaml
+kubectl apply -f invoice/invoice-lb.yaml
 kubectl apply -f frontend/frontend.yaml
 kubectl apply -f http-gateway.yaml
 kubectl apply -f virtualservice-external.yaml
+kubectl get pods --watch

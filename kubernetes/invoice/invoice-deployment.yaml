@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: payment
+  name: invoice
 spec:
   replicas: 2
   minReadySeconds: 15
@@ -13,14 +13,11 @@ spec:
   template:
     metadata:
       labels:
-        app: payment
+        app: invoice
     spec:
       containers:
-        - image: rsoprojectwut/paymentservice:1.0.0
+        - image: rsoprojectwut/invoiceservice:1.0.0
           imagePullPolicy: Always
-          name: payment-pod
-          env:
-            - name: CONSUMER_API_URL
-              value: "http://consumer"
+          name: invoice-pod
           ports:
             - containerPort: 8080

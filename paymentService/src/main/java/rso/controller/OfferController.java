@@ -23,7 +23,7 @@ import java.util.List;
 
 @Component
 @Controller
-@RequestMapping(path="api/offers")
+@RequestMapping(path="/api/offers")
 public class OfferController {
 
     private OfferService offerService;

@@ -12,7 +12,11 @@ spec:
 #    - uri:
 #        exact: /
 #    - uri:
-#        exact: /callback
+#        exact: /consumer
+#    - uri:
+#        exact: /supplier
+#    - uri:
+#        exact: /admin
 #    - uri:
 #        prefix: /static
 #    - uri:
@@ -24,11 +28,7 @@ spec:
 #          number: 80
   - match:
     - uri:
-        exact: /
-    - uri:
-        regex: /test.*
-    - uri:
-        regex: /static
+        regex: /api/test.*
     route:
     - destination:
         host: testdeploy-lb
@@ -36,7 +36,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        regex: /users.*
+        regex: /api/users.*
     route:
     - destination:
         host: consumer-lb
@@ -44,9 +44,19 @@ spec:
           number: 8080
   - match:
     - uri:
-        regex: /payments.*
+        regex: /api/payments.*
+    - uri:
+        regex: /api/offers.*
     route:
     - destination:
         host: payment-lb
+        port:
+          number: 8080
+  - match:
+    - uri:
+        regex: /api/invoice.*
+    route:
+    - destination:
+        host: invoice-lb
         port:
           number: 8080
