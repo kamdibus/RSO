@@ -8,24 +8,24 @@ spec:
   gateways:
   - http-gateway
   http:
-#  - match:
-#    - uri:
-#        exact: /
-#    - uri:
-#        exact: /consumer
-#    - uri:
-#        exact: /supplier
-#    - uri:
-#        exact: /admin
-#    - uri:
-#        prefix: /static
-#    - uri:
-#        regex: '^.*\.(ico|png|jpg)$'
-#    route:
-#    - destination:
-#        host: frontend
-#        port:
-#          number: 80
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        exact: /consumer
+    - uri:
+        exact: /supplier
+    - uri:
+        exact: /admin
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80
   - match:
     - uri:
         regex: /api/test.*
