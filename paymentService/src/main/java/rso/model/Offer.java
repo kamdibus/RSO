@@ -2,6 +2,7 @@ package rso.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,13 +11,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Document(collection = "offers")
 @Data
-@Entity
-@Table(name = "OFFERS")
 @EqualsAndHashCode(exclude = "payments")
 public class Offer {
+
+    @Transient
+    public static final String SEQUENCE_NAME = "offers_sequence";
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
     private float discount;
@@ -48,60 +51,4 @@ public class Offer {
     }
 
     public Offer() {}
-
-    public void setId(long id){
-        this.id = id;
-    }
-
-    public long getId(){
-        return this.id;
-    }
-
-    public void setCreationDate(Date creationDate){
-        this.creationDate = creationDate;
-    }
-
-    public Date getCreationDate(){
-        return this.creationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate){
-        this.expirationDate = expirationDate;
-    }
-
-    public Date getExpirationDate(){
-        return this.expirationDate;
-    }
-
-    public void setInvoiceId(long invoiceId){
-        this.invoiceId = invoiceId;
-    }
-
-    public long getInvoiceId(){
-        return this.invoiceId;
-    }
-
-    public void setUserId(long userId){
-        this.userId = userId;
-    }
-
-    public long getUserId(){
-        return this.userId;
-    }
-
-    public void setStatus(StatusType status){
-        this.status = status;
-    }
-
-    public StatusType getStatus(){
-        return this.status;
-    }
-
-    public void setDiscount(float discount){
-        this.discount = discount;
-    }
-
-    public float getDiscount(){
-        return this.discount;
-    }
 }
