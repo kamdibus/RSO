@@ -10,15 +10,13 @@ import { AdminView } from './components/Admin/AdminView';
 class Router extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route component={ConsumerView} path='/consumer' />
-          <Route component={SupplierView} path='/supplier' />
-          <Route component={AdminView} path='/admin' />
-          <Route component={RoleSelect} path='/role-select' />
-          <Redirect from='/' to='/role-select' />
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <Route component={ConsumerView} path='/consumer' />
+        <Route component={SupplierView} path='/supplier' />
+        <Route component={AdminView} path='/admin' />
+        <Route component={RoleSelect} path='/role-select' />
+        <Redirect from='/' to='/role-select' />
+      </Switch>
     )
   }
 }
