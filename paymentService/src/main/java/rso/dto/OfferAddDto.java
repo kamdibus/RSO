@@ -14,7 +14,9 @@ public class OfferAddDto {
 
     private long invoiceId;
 
-    private long userId;
+    private long supplierId;
+
+    private long consumerId;
 
     public void setId(long id){
         this.id = id;
@@ -32,14 +34,21 @@ public class OfferAddDto {
         return this.invoiceId;
     }
 
-    public void setUserId(long userId){
-        this.userId = userId;
+    public void setSupplierId(long supplierId){
+        this.supplierId = supplierId;
     }
 
-    public long getUserId(){
-        return this.userId;
+    public long getSupplierId(){
+        return this.supplierId;
     }
 
+    public void setConsumerId(long consumerId){
+        this.consumerId = consumerId;
+    }
+
+    public long getConsumerId(){
+        return this.consumerId;
+    }
     public void setDiscount(float discount){
         this.discount = discount;
     }
