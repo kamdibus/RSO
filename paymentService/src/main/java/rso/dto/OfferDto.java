@@ -42,7 +42,12 @@ public class OfferDto {
 
     @Setter
     @Getter
-    private long userId;
+
+    private long supplierId;
+
+    @Setter
+    @Getter
+    private long consumerId;
 
     @Setter
     @Getter

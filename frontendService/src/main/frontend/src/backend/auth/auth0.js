@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import { USERS_URL} from "../../environment";
 
 class Auth {
   constructor() {
@@ -58,6 +59,7 @@ class Auth {
     this.accessToken = authResult.accessToken;
     // set the time that the id token will expire at
     this.expiresAt = authResult.idTokenPayload.exp * 1000;
+    this.shareUserData(authResult, USERS_URL);
   }
 
   signOut() {
@@ -82,6 +84,28 @@ class Auth {
       return {}
     }
     return { 'Authorization': `Bearer ${token}` };
+  }
+
+  shareUserData = (authResult, url) => {
+    let metaDataUrl = 'https://' + this.auth0.baseOptions.domain + '/userInfo' + "?access_token=" + authResult.accessToken;
+    fetch(metaDataUrl, {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => fetch(
+      url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+      }
+    ))
   }
 }
 

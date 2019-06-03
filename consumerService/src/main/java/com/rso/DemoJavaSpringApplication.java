@@ -9,5 +9,6 @@ public class DemoJavaSpringApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoJavaSpringApplication.class, args);
+		System.out.println("And the secret is: " + System.getenv("SECRET_PASSWORD"));
 	}
 }

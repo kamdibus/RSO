@@ -1,11 +1,14 @@
 package com.rso.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rso.dto.UserEntityDto;
 import com.rso.model.User;
 import com.rso.model.UserStatus;
 import com.rso.repository.UserRepository;
 import com.rso.util.DtoHandler;
 import com.rso.util.MongoSequenceGeneratorService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.IOException;
 
 
 @Component
@@ -45,7 +50,7 @@ public class UserService {
 
 
     public ResponseEntity<?> getCompanyDetailsForNip(String nipNumber) {
-        User userForId = userRepository.findFirstByNipNumber(nipNumber);
+        User userForId = userRepository.findFirstByNip(nipNumber);
         return mapUserToDto(userForId, UserEntityDto.class);
     }
 
@@ -130,8 +135,12 @@ public class UserService {
         return getForPaymentOfferEntities(url);
     }
 
-    public ResponseEntity<?> createNewUserAccount(UserEntityDto userDto) {
-        User newUser = this.dtoHandler.checkDtoEnumFields(userDto);
+    public ResponseEntity<?> createNewUserAccount(String userDto) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JSONObject userData = new JSONObject(userDto);
+        JSONObject userEntityDto = userData.getJSONObject("https://localhost:8080/user_metadata");
+        UserEntityDto dto = mapper.readValue(userEntityDto.toString(), UserEntityDto.class);
+        User newUser = this.dtoHandler.checkDtoEnumFields(dto);
         this.saveUserInMongodb(newUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
