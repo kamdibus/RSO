@@ -49,7 +49,7 @@ public class ConsumerServiceTests {
 	    //given
         final String validNip = "1";
         final User testUser = new User(validNip);
-        when(userRepository.findFirstByNipNumber(validNip)).thenReturn(testUser);
+        when(userRepository.findFirstByNip(validNip)).thenReturn(testUser);
         when(dtoHandler.mapEntityToDto(testUser, UserEntityDto.class)).thenReturn(new UserEntityDto());
 
         //when
@@ -66,7 +66,7 @@ public class ConsumerServiceTests {
 	    final String invalidNip = "0";
 
 	    //when
-	    when(userRepository.findFirstByNipNumber(invalidNip)).thenReturn(null);
+	    when(userRepository.findFirstByNip(invalidNip)).thenReturn(null);
 	    final ResponseEntity<?> invalidNipResponse = userService.getCompanyDetailsForNip(invalidNip);
 	    HttpStatus invalidNipResponseCode = invalidNipResponse.getStatusCode();
 
