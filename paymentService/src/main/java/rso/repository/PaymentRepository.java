@@ -8,7 +8,9 @@ import rso.model.StatusType;
 public interface PaymentRepository extends MongoRepository<Payment, Long> {
 
     Iterable<Payment> findByStatus(StatusType statusType);
-    Iterable<Payment> findByStatusAndOffer_UserId(StatusType statusType, Long userId);
-    Iterable<Payment> findByOffer_UserId(Long userId);
+    Iterable<Payment> findByStatusAndOffer_SupplierId(StatusType statusType, Long userId);
+    Iterable<Payment> findByStatusAndOffer_ConsumerId(StatusType statusType, Long userId);
+    Iterable<Payment> findByOffer_SupplierId(Long userId);
+    Iterable<Payment> findByOffer_ConsumerId(Long userId);
 
 }

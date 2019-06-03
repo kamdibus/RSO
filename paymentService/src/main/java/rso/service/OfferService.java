@@ -22,9 +22,7 @@ import rso.repository.OfferRepository;
 import rso.util.MongoSequenceGeneratorService;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -84,13 +82,29 @@ public class OfferService {
         return userId;
     }
 
+    private String getUserType(String token){
+        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
+        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
+        UserInfo info = null;
+        try {
+            info = request2.execute();
+        } catch (APIException exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } catch (Auth0Exception exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
+        String userType = (String) userMeta.get("type");
+        return userType;
+    }
+
     public OfferDto getOfferForId(long id, String token) throws InvalidOfferIdException {
         Long userId = getUserId(token);
         if (!offerRepository.findById(id).isPresent()) {
             throw new InvalidOfferIdException();
         }
         Offer offer = offerRepository.findById(id).get();
-        if (userId != offer.getUserId()) {
+        if (userId != offer.getSupplierId() || userId != offer.getConsumerId()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         return convertToDto(offer);
@@ -98,7 +112,14 @@ public class OfferService {
 
     public List<OfferDto> getOffers(String token) {
         Long userId = getUserId(token);
-        List<Offer> offers = (List<Offer>) offerRepository.findByUserId(userId);
+        String userType = getUserType(token);
+        List<Offer> offers = new ArrayList();
+        if (userType == "supplier"){
+            offers.addAll((Collection<? extends Offer>) offerRepository.findBySupplierId(userId));
+        }
+        else {
+            offers.addAll((Collection<? extends Offer>) offerRepository.findByConsumerId(userId));
+        }
         return offers.stream()
                 .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
@@ -106,7 +127,14 @@ public class OfferService {
 
     public List<OfferDto> getOffersByStatus(StatusType statusType, String token) {
         Long userId = getUserId(token);
-        List<Offer> offers = (List<Offer>) offerRepository.findByUserIdAndStatus(userId, statusType);
+        String userType = getUserType(token);
+        List<Offer> offers = new ArrayList();
+        if (userType == "supplier"){
+            offers.addAll((Collection<? extends Offer>) offerRepository.findBySupplierIdAndStatus(userId, statusType));
+        }
+        else {
+            offers.addAll((Collection<? extends Offer>) offerRepository.findByConsumerIdAndStatus(userId, statusType));
+        }
         return offers.stream()
                 .map(post -> convertToDto(post))
                 .collect(Collectors.toList());
@@ -115,7 +143,11 @@ public class OfferService {
     public OfferDto addOffer(OfferAddDto offerDto, String token) throws ParseException {
         Offer offer = convertToEntity(offerDto);
         Long userId = getUserId(token);
-        offer.setUserId(userId);
+        String userType = getUserType(token);
+        if (userType == "supplier"){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        offer.setConsumerId(userId);
 //        Offer offerCreated = offerRepository.save(offer);
         Offer offerCreated = saveOfferInMongoDb(offer);
         return convertToDto(offerCreated);
@@ -134,13 +166,13 @@ public class OfferService {
     @Transactional
     public void deleteOffersForUser(String token) {
         Long userId = getUserId(token);
-        offerRepository.deleteByUserId(userId);
+        offerRepository.deleteById(userId);
     }
 
     public OfferDto editOffer(Long id, OfferEditDto editOfferDto, String token) {
         Long userId = getUserId(token);
         Offer offer = offerRepository.findById(id).get();
-        if (offer.getUserId() != userId){
+        if (offer.getSupplierId() != userId){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         offer.setStatus(editOfferDto.getStatus());

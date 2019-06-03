@@ -5,7 +5,6 @@ metadata:
 spec:
   targets:
   - name: frontend
-#  - name: sa-feedback
   origins:
   - jwt:
       issuer: "https://dev-fvyydqa0.eu.auth0.com/"
