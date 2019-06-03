@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 @Data
 public class InvoiceEntityDto {
 
-    private String name;
+    private Long id;
     private SimpleDateFormat date;
-    // TODO: replace the data placeholder with the actual data
-    private String data;
+    private Long supplierId;
+    private Long consumerId;
+    private Long amount;
+    private String otherData;
 
     public InvoiceEntityDto() {}
 }
