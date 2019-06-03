@@ -92,22 +92,21 @@ class Auth {
             method: 'GET',
             credentials: 'same-origin',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
-        }).then(function(response) {
-          return response.json();
-        }).then(function(data) {
-            return fetch(url, {
-                method: 'POST',
-                credentials: 'same-origin',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-        })
+        }).then(response => response.json())
+            .then(data => fetch(
+                url, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                }
+            ))
     };
-}
+
 
 const auth0Client = new Auth();
 
