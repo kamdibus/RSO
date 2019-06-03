@@ -21,7 +21,7 @@ public class TestController {
     public @ResponseBody
     List<PaymentDto> getPayments() {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(clusterIP + "/payments/",
+        return restTemplate.getForEntity(clusterIP + "/api/payments/",
                 List.class)
                 .getBody();
     }
@@ -30,7 +30,7 @@ public class TestController {
     public @ResponseBody
     String getUsersTestString() {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(clusterIP + "/users/test",
+        return restTemplate.getForEntity(clusterIP + "/api/users/test",
                 String.class)
                 .getBody();
     }
@@ -39,7 +39,7 @@ public class TestController {
     public @ResponseBody
     String getInvoiceTestString() {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(clusterIP + "/invoices/test",
+        return restTemplate.getForEntity(clusterIP + "/api/invoices/test",
                 String.class)
                 .getBody();
     }

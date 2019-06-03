@@ -21,3 +21,9 @@ spec:
           name: invoice-pod
           ports:
             - containerPort: 8080
+          env:
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: password

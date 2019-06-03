@@ -3,18 +3,20 @@ package com.rso.model;
 import com.rso.dto.UserEntityDto;
 import jdk.nashorn.internal.runtime.options.Option;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
+@Document(collection = "users")
 @Data
-@Entity
-@Table(name = "USERS")
 public class User {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "users_sequence";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
