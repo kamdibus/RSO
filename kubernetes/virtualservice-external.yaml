@@ -18,6 +18,8 @@ spec:
     - uri:
         exact: /admin
     - uri:
+        regex: /callback.*
+    - uri:
         prefix: /static
     - uri:
         regex: '^.*\.(ico|png|jpg)$'
