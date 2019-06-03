@@ -16,11 +16,11 @@ import java.util.stream.Stream;
 @EqualsAndHashCode(exclude = "payments")
 public class Offer {
 
-    @Transient
-    public static final String SEQUENCE_NAME = "offers_sequence";
-
     @Id
     private long id;
+
+    @Transient
+    public static final String SEQUENCE_NAME = "offers_sequence";
 
     private float discount;
 
@@ -33,16 +33,19 @@ public class Offer {
     private Date expirationDate;
 
     private long invoiceId;
-    
-    private long userId;
+
+    private long supplierId;
+
+    private long consumerId;
 
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
-    public Offer(Date creationDate, Date expirationDate, long userId,  long invoiceId, float discount, StatusType status, Payment... payments) {
+    public Offer(Date creationDate, Date expirationDate, long supplierId, long consumerId,  long invoiceId, float discount, StatusType status, Payment... payments) {
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
-        this.userId = userId;
+        this.supplierId = supplierId;
+        this.consumerId = consumerId;
         this.invoiceId = invoiceId;
         this.status = status;
         this.discount = discount;
@@ -51,4 +54,68 @@ public class Offer {
     }
 
     public Offer() {}
+
+    public void setId(long id){
+        this.id = id;
+    }
+
+    public long getId(){
+        return this.id;
+    }
+
+    public void setCreationDate(Date creationDate){
+        this.creationDate = creationDate;
+    }
+
+    public Date getCreationDate(){
+        return this.creationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate){
+        this.expirationDate = expirationDate;
+    }
+
+    public Date getExpirationDate(){
+        return this.expirationDate;
+    }
+
+    public void setInvoiceId(long invoiceId){
+        this.invoiceId = invoiceId;
+    }
+
+    public long getInvoiceId(){
+        return this.invoiceId;
+    }
+
+    public void setSupplierId(long supplierId){
+        this.supplierId = supplierId;
+    }
+
+    public long getSupplierId(){
+        return this.supplierId;
+    }
+
+    public void setConsumerId(long consumerId){
+        this.consumerId = consumerId;
+    }
+
+    public long getConsumerId(){
+        return this.consumerId;
+    }
+
+    public void setStatus(StatusType status){
+        this.status = status;
+    }
+
+    public StatusType getStatus(){
+        return this.status;
+    }
+
+    public void setDiscount(float discount){
+        this.discount = discount;
+    }
+
+    public float getDiscount(){
+        return this.discount;
+    }
 }
