@@ -5,6 +5,7 @@ import com.rso.exceptions.InvalidInvoiceIdException;
 import com.rso.model.Invoice;
 import com.rso.repository.InvoiceRepository;
 import com.rso.util.DtoHandler;
+import com.rso.util.MongoSequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ public class InvoiceService {
 
     private DtoHandler dtoHandler;
 
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
     @Value("${payment.api.url}")
     private String apiPaymentService;
 
@@ -27,9 +30,12 @@ public class InvoiceService {
 
 
     @Autowired
-    public InvoiceService(InvoiceRepository invoiceRepository, DtoHandler dtoHandler) {
+    public InvoiceService(InvoiceRepository invoiceRepository,
+                          DtoHandler dtoHandler,
+                          MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.invoiceRepository = invoiceRepository;
         this.dtoHandler = dtoHandler;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
     private <T> ResponseEntity<?> mapInvoiceToDto(Invoice invoiceForId, Class<T> dtoType) {

@@ -18,6 +18,7 @@ import rso.model.Payment;
 import rso.model.StatusType;
 import rso.repository.OfferRepository;
 import rso.repository.PaymentRepository;
+import rso.util.MongoSequenceGeneratorService;
 
 import java.text.ParseException;
 import java.util.*;
@@ -40,9 +41,13 @@ public class PaymentService {
     @Value("${auth0.userMetadataUrl}")
     private String metaUrl;
 
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
     @Autowired
-    public PaymentService(PaymentRepository paymentRepository) {
+    public PaymentService(PaymentRepository paymentRepository,
+                          MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.paymentRepository = paymentRepository;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
     private PaymentDto convertToDto(Payment payment) {
@@ -120,8 +125,15 @@ public class PaymentService {
 
     public PaymentDto addPayment(PaymentAddDto paymentAddDto, String token) throws ParseException {
         Payment payment = convertToEntity(paymentAddDto);
-        Payment paymentCreated = paymentRepository.save(payment);
+//        Payment paymentCreated = paymentRepository.save(payment);
+        Payment paymentCreated = savePaymentInMongoDb(payment);
         return convertToDto(paymentCreated);
+    }
+
+    private Payment savePaymentInMongoDb(Payment newPayment) {
+        newPayment.setId(mongoSequenceGeneratorService.generateSequence(Payment.SEQUENCE_NAME));
+        paymentRepository.save(newPayment);
+        return newPayment;
     }
 
     public List<PaymentDto> getPaymentsByStatus(StatusType statusType, String token) {
