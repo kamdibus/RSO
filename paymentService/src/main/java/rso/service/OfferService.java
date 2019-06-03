@@ -92,7 +92,7 @@ public class OfferService {
             throw new InvalidOfferIdException();
         }
         Offer offer = offerRepository.findById(id).get();
-        if (userId != offer.getSupplierId() || userId != offer.getConsumerId()) {
+        if (userId != offer.getSupplierId() && userId != offer.getConsumerId()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         return convertToDto(offer);
