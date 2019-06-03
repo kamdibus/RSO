@@ -5,6 +5,8 @@ import com.auth0.exception.APIException;
 import com.auth0.exception.Auth0Exception;
 import com.auth0.json.auth.UserInfo;
 import com.auth0.net.Request;
+import lombok.Getter;
+import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,7 @@ import rso.repository.PaymentRepository;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Component
 public class PaymentService {
@@ -59,7 +62,7 @@ public class PaymentService {
         return payment;
     }
 
-    private Long getUserId(String token){
+    private userData getUserData(String token){
         AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
         Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
         UserInfo info = null;
@@ -72,27 +75,13 @@ public class PaymentService {
         }
         HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
         Long userId = Long.parseLong((String) userMeta.get("nip"));
-        return userId;
-    }
-
-    private String getUserType(String token){
-        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
-        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
-        UserInfo info = null;
-        try {
-            info = request2.execute();
-        } catch (APIException exception) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        } catch (Auth0Exception exception) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
-        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
         String userType = (String) userMeta.get("type");
-        return userType;
+        userData data = new userData(userId, userType);
+        return data;
     }
 
     public PaymentDto getPaymentForId(long id, String token) throws InvalidPaymentIdException {
-        Long userId = getUserId(token);
+        Long userId = getUserData(token).getId();
         if (!paymentRepository.findById(id).isPresent()) {
             throw new InvalidPaymentIdException();
         }
@@ -104,8 +93,8 @@ public class PaymentService {
     }
 
     public List<PaymentDto> getPayments(String token) {
-        Long userId = getUserId(token);
-        String userType = getUserType(token);
+        Long userId = getUserData(token).getId();
+        String userType = getUserData(token).getType();
         List<Payment> payments = new ArrayList();
         if (userType == "supplier"){
             payments.addAll((Collection<? extends Payment>) paymentRepository.findByOffer_SupplierId(userId));
@@ -125,8 +114,8 @@ public class PaymentService {
     }
 
     public List<PaymentDto> getPaymentsByStatus(StatusType statusType, String token) {
-        Long userId = getUserId(token);
-        String userType = getUserType(token);
+        Long userId = getUserData(token).getId();
+        String userType = getUserData(token).getType();
         List<Payment> payments = new ArrayList();
         if (userType == "supplier"){
             payments.addAll((Collection<? extends Payment>) paymentRepository.findByStatusAndOffer_SupplierId(statusType, userId));
@@ -139,4 +128,14 @@ public class PaymentService {
                 .collect(Collectors.toList());
     }
 
+    @Getter
+    @Setter
+    class userData{
+        Long id;
+        String type;
+        public userData(Long id, String type){
+            this.id = id;
+            this.type = type;
+        }
+    }
 }
