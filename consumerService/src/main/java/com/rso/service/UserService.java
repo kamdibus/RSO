@@ -50,7 +50,7 @@ public class UserService {
 
 
     public ResponseEntity<?> getCompanyDetailsForNip(String nipNumber) {
-        User userForId = userRepository.findFirstByNipNumber(nipNumber);
+        User userForId = userRepository.findFirstByNip(nipNumber);
         return mapUserToDto(userForId, UserEntityDto.class);
     }
 

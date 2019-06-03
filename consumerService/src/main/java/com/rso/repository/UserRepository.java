@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends MongoRepository<User, Long> {
 
-    User findFirstByNipNumber(@Param("nipNumber") String nipNumber);
+    User findFirstByNip(@Param("nip") String nip);
 }
