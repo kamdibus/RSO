@@ -86,22 +86,6 @@ public class OfferService {
         return data;
     }
 
-    private String getUserType(String token){
-        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
-        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
-        UserInfo info = null;
-        try {
-            info = request2.execute();
-        } catch (APIException exception) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        } catch (Auth0Exception exception) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
-        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
-        String userType = (String) userMeta.get("type");
-        return userType;
-    }
-
     public OfferDto getOfferForId(long id, String token) throws InvalidOfferIdException {
         Long userId = getUserData(token).getId();
         if (!offerRepository.findById(id).isPresent()) {
