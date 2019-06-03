@@ -30,4 +30,5 @@ public class UserEntityDto {
     private String userStatus;
 
     public UserEntityDto() {}
+
 }

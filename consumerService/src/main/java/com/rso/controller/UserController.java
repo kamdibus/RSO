@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(path = "/api/users")
 public class UserController  {
@@ -48,8 +50,8 @@ public class UserController  {
     }
 
     @PostMapping(value = "/new")
-    public ResponseEntity<?> saveNewUser(@RequestBody UserEntityDto userDto) {
-        return userService.createNewUserAccount(userDto);
+    public ResponseEntity<?> saveNewUser(@RequestBody String requestBody) throws IOException {
+        return userService.createNewUserAccount(requestBody);
     }
 
     @GetMapping(value = "/test")

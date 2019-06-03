@@ -25,7 +25,7 @@ public class DtoHandler {
             UserStatus statusFromDto = UserStatus.valueOf(statusValue.toUpperCase());
             newUser.setUserStatus(statusFromDto);
             UserType typeFromDto = UserType.valueOf(typeValue.toUpperCase());
-            newUser.setUserType(typeFromDto);
+            newUser.setType(typeFromDto);
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
