@@ -97,7 +97,8 @@ class Auth {
     })
     .then(response => response.json())
     .then(data => fetch(
-      url, {
+      url,
+      {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
