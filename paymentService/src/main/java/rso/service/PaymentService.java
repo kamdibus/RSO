@@ -20,6 +20,7 @@ import rso.model.Payment;
 import rso.model.StatusType;
 import rso.repository.OfferRepository;
 import rso.repository.PaymentRepository;
+import rso.util.MongoSequenceGeneratorService;
 
 import java.text.ParseException;
 import java.util.*;
@@ -43,9 +44,13 @@ public class PaymentService {
     @Value("${auth0.userMetadataUrl}")
     private String metaUrl;
 
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
     @Autowired
-    public PaymentService(PaymentRepository paymentRepository) {
+    public PaymentService(PaymentRepository paymentRepository,
+                          MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.paymentRepository = paymentRepository;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
     private PaymentDto convertToDto(Payment payment) {
@@ -80,6 +85,22 @@ public class PaymentService {
         return data;
     }
 
+    private String getUserType(String token){
+        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
+        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
+        UserInfo info = null;
+        try {
+            info = request2.execute();
+        } catch (APIException exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } catch (Auth0Exception exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
+        String userType = (String) userMeta.get("type");
+        return userType;
+    }
+
     public PaymentDto getPaymentForId(long id, String token) throws InvalidPaymentIdException {
         Long userId = getUserData(token).getId();
         if (!paymentRepository.findById(id).isPresent()) {
@@ -109,8 +130,15 @@ public class PaymentService {
 
     public PaymentDto addPayment(PaymentAddDto paymentAddDto, String token) throws ParseException {
         Payment payment = convertToEntity(paymentAddDto);
-        Payment paymentCreated = paymentRepository.save(payment);
+//        Payment paymentCreated = paymentRepository.save(payment);
+        Payment paymentCreated = savePaymentInMongoDb(payment);
         return convertToDto(paymentCreated);
+    }
+
+    private Payment savePaymentInMongoDb(Payment newPayment) {
+        newPayment.setId(mongoSequenceGeneratorService.generateSequence(Payment.SEQUENCE_NAME));
+        paymentRepository.save(newPayment);
+        return newPayment;
     }
 
     public List<PaymentDto> getPaymentsByStatus(StatusType statusType, String token) {

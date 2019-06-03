@@ -2,6 +2,7 @@ package rso.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,14 +11,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Document(collection = "offers")
 @Data
-@Entity
-@Table(name = "OFFERS")
 @EqualsAndHashCode(exclude = "payments")
 public class Offer {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
+
+    @Transient
+    public static final String SEQUENCE_NAME = "offers_sequence";
 
     private float discount;
 
@@ -30,7 +33,7 @@ public class Offer {
     private Date expirationDate;
 
     private long invoiceId;
-    
+
     private long supplierId;
 
     private long consumerId;

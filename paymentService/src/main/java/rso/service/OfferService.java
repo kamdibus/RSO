@@ -21,6 +21,7 @@ import rso.exceptions.InvalidOfferIdException;
 import rso.model.Offer;
 import rso.model.StatusType;
 import rso.repository.OfferRepository;
+import rso.util.MongoSequenceGeneratorService;
 
 import java.text.ParseException;
 import java.util.*;
@@ -43,9 +44,13 @@ public class OfferService {
     @Value("${auth0.userMetadataUrl}")
     private String metaUrl;
 
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
     @Autowired
-    public OfferService(OfferRepository offerRepository) {
+    public OfferService(OfferRepository offerRepository,
+                        MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.offerRepository = offerRepository;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
     private OfferDto convertToDto(Offer offer) {
@@ -79,6 +84,22 @@ public class OfferService {
         String userType = (String) userMeta.get("type");
         userData data = new userData(userId, userType);
         return data;
+    }
+
+    private String getUserType(String token){
+        AuthAPI auth = new AuthAPI(domain, clientId, clientSecret);
+        Request<UserInfo> request2 = auth.userInfo(token.replace("Bearer ", ""));
+        UserInfo info = null;
+        try {
+            info = request2.execute();
+        } catch (APIException exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        } catch (Auth0Exception exception) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        HashMap userMeta = (HashMap) info.getValues().get(metaUrl);
+        String userType = (String) userMeta.get("type");
+        return userType;
     }
 
     public OfferDto getOfferForId(long id, String token) throws InvalidOfferIdException {
@@ -131,8 +152,15 @@ public class OfferService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         offer.setConsumerId(userId);
-        Offer offerCreated = offerRepository.save(offer);
+//        Offer offerCreated = offerRepository.save(offer);
+        Offer offerCreated = saveOfferInMongoDb(offer);
         return convertToDto(offerCreated);
+    }
+
+    private Offer saveOfferInMongoDb(Offer newOffer) {
+        newOffer.setId(mongoSequenceGeneratorService.generateSequence(Offer.SEQUENCE_NAME));
+        offerRepository.save(newOffer);
+        return newOffer;
     }
 
     public void deleteOffer(Long offerId, String token) throws InvalidOfferIdException {
