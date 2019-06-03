@@ -2,18 +2,22 @@ package com.rso.model;
 
 import com.rso.dto.InvoiceEntityDto;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 
+@Document(collection = "invoices")
 @Data
-@Entity
-@Table(name = "INVOICES")
 public class Invoice {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "invoices_sequence";
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+
+    private String data;
 
     private SimpleDateFormat date;
 
@@ -37,4 +41,6 @@ public class Invoice {
         this.amount = newInvoiceData.getAmount();
         this.otherData = newInvoiceData.getOtherData();
     }
+    public Invoice() {}
+
 }

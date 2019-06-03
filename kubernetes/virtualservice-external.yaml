@@ -10,7 +10,27 @@ spec:
   http:
   - match:
     - uri:
-        regex: api/test.*
+        exact: /
+    - uri:
+        exact: /consumer
+    - uri:
+        exact: /supplier
+    - uri:
+        exact: /admin
+    - uri:
+        regex: /callback.*
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: frontend
+        port:
+          number: 80
+  - match:
+    - uri:
+        regex: /api/test.*
     route:
     - destination:
         host: testdeploy-lb
@@ -18,7 +38,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        regex: api/users.*
+        regex: /api/users.*
     route:
     - destination:
         host: consumer-lb
@@ -26,7 +46,9 @@ spec:
           number: 8080
   - match:
     - uri:
-        regex: api/payments.*
+        regex: /api/payments.*
+    - uri:
+        regex: /api/offers.*
     route:
     - destination:
         host: payment-lb
@@ -34,17 +56,9 @@ spec:
           number: 8080
   - match:
     - uri:
-        regex: api/invoice.*
+        regex: /api/invoice.*
     route:
     - destination:
         host: invoice-lb
-        port:
-          number: 8080
-  - match:
-    - uri:
-        regex: /.*
-    route:
-    - destination:
-        host: frontend
         port:
           number: 8080

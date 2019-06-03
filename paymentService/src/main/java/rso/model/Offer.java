@@ -2,6 +2,7 @@ package rso.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,14 +11,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Document(collection = "offers")
 @Data
-@Entity
-@Table(name = "OFFERS")
 @EqualsAndHashCode(exclude = "payments")
 public class Offer {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
+
+    @Transient
+    public static final String SEQUENCE_NAME = "offers_sequence";
 
     private float discount;
 
@@ -30,16 +33,19 @@ public class Offer {
     private Date expirationDate;
 
     private long invoiceId;
-    
-    private long userId;
+
+    private long supplierId;
+
+    private long consumerId;
 
     @OneToMany(mappedBy="offer", cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
-    public Offer(Date creationDate, Date expirationDate, long userId,  long invoiceId, float discount, StatusType status, Payment... payments) {
+    public Offer(Date creationDate, Date expirationDate, long supplierId, long consumerId,  long invoiceId, float discount, StatusType status, Payment... payments) {
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
-        this.userId = userId;
+        this.supplierId = supplierId;
+        this.consumerId = consumerId;
         this.invoiceId = invoiceId;
         this.status = status;
         this.discount = discount;
@@ -81,12 +87,20 @@ public class Offer {
         return this.invoiceId;
     }
 
-    public void setUserId(long userId){
-        this.userId = userId;
+    public void setSupplierId(long supplierId){
+        this.supplierId = supplierId;
     }
 
-    public long getUserId(){
-        return this.userId;
+    public long getSupplierId(){
+        return this.supplierId;
+    }
+
+    public void setConsumerId(long consumerId){
+        this.consumerId = consumerId;
+    }
+
+    public long getConsumerId(){
+        return this.consumerId;
     }
 
     public void setStatus(StatusType status){

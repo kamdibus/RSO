@@ -14,9 +14,7 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @Autowired
-    public InvoiceController(InvoiceService invoiceService) {
-        this.invoiceService = invoiceService;
-    }
+    public InvoiceController(InvoiceService invoiceService) { this.invoiceService = invoiceService; }
 
     // TODO: Remove
     @GetMapping(path="/{invoiceId}")
@@ -57,7 +55,6 @@ public class InvoiceController {
         return invoiceService.removeUserInvoices(userId);
     }
 
-    @GetMapping(path = "/test")
+    @GetMapping(value = "/test")
     public ResponseEntity<?> testInvoiceService() { return invoiceService.testInvoiceService(); }
 }
-

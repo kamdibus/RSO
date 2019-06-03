@@ -16,8 +16,14 @@ spec:
         app: invoice
     spec:
       containers:
-        - image: rsoprojectwut/invoiceservice
+        - image: rsoprojectwut/invoiceservice:1.0.0
           imagePullPolicy: Always
           name: invoice-pod
           ports:
             - containerPort: 8080
+          env:
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: password

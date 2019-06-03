@@ -4,6 +4,7 @@ import com.rso.dto.InvoiceEntityDto;
 import com.rso.model.Invoice;
 import com.rso.repository.InvoiceRepository;
 import com.rso.util.DtoHandler;
+import com.rso.util.MongoSequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,19 +19,22 @@ public class InvoiceService {
 
     private DtoHandler dtoHandler;
 
-    @Value("${payments.api.url}")
+    private MongoSequenceGeneratorService mongoSequenceGeneratorService;
+
+    @Value("${payment.api.url}")
     private String apiPaymentService;
 
-    @Value("${users.api.url}")
+    @Value("${user.api.url}")
     private String apiUserService;
 
-    @Value("${offers.api.url}")
-    private String apiOfferService;
 
     @Autowired
-    public InvoiceService(InvoiceRepository invoiceRepository, DtoHandler dtoHandler) {
+    public InvoiceService(InvoiceRepository invoiceRepository,
+                          DtoHandler dtoHandler,
+                          MongoSequenceGeneratorService mongoSequenceGeneratorService) {
         this.invoiceRepository = invoiceRepository;
         this.dtoHandler = dtoHandler;
+        this.mongoSequenceGeneratorService = mongoSequenceGeneratorService;
     }
 
     private <T> ResponseEntity<?> mapInvoiceToDto(Invoice invoiceForId, Class<T> dtoType) {
@@ -40,6 +44,14 @@ public class InvoiceService {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<?> remoteUserInvoices(long userId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<?> editDetailsForUserId(InvoiceEntityDto newData, Long invoiceId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<?> testInvoiceService() {
@@ -91,3 +103,4 @@ public class InvoiceService {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
+
