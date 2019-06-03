@@ -32,11 +32,13 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <mongo-java-driver.version>3.10.1</mongo-java-driver.version>
         <spring-data-mongodb.version>2.1.5.RELEASE</spring-data-mongodb.version>
+        <spring-boot-starter-data-mongodb.version>2.1.4.RELEASE</spring-boot-starter-data-mongodb.version>
         <lombok.version>1.18.6</lombok.version>
         <jjwt.version>0.9.1</jjwt.version>
         <spring-boot-starter-security.version>2.1.4.RELEASE</spring-boot-starter-security.version>
         <spring.version>5.0.6.RELEASE</spring.version>
         <mapper.version>2.3.2</mapper.version>
+        <auth0.version>1.13.3</auth0.version>
     </properties>
 
     <profiles>
@@ -246,6 +248,11 @@
                 <version>${mongo-java-driver.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                <version>${spring-boot-starter-data-mongodb.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-mongodb</artifactId>
                 <version>${spring-data-mongodb.version}</version>
@@ -269,6 +276,11 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
                 <version>${mapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>auth0</artifactId>
+                <version>${auth0.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

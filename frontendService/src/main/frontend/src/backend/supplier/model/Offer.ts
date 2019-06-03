@@ -35,7 +35,7 @@ export interface OfferHistoryResponse {
 }
 
 export enum OfferStatus {
-  ACCEPTED = 'ACCEPTED',
-  CREATED = 'CREATED',
-  REJECTED = 'REJECTED'
+  ACCEPTED = 'accepted',
+  PENDING = 'pending',
+  REJECTED = 'rejected'
 }
