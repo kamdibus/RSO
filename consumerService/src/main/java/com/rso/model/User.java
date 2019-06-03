@@ -23,9 +23,9 @@ public class User {
 
     private String address;
 
-    private String nipNumber;
+    private String nip;
 
-    private String phoneNumber;
+    private String phone;
 
     private String emailAddress;
 
@@ -35,12 +35,12 @@ public class User {
 
     private SimpleDateFormat joinDate;
 
-    private UserType userType;
+    private UserType type;
 
     private UserStatus userStatus;
 
     public User(String nipNumber) {
-        this.nipNumber = nipNumber;
+        this.nip = nipNumber;
     }
 
     public User(long id) {
@@ -52,8 +52,8 @@ public class User {
     public User(UserEntityDto newData) {
         this.name = newData.getName();
         this.address = newData.getAddress();
-        this.nipNumber = newData.getNipNumber();
-        this.phoneNumber = newData.getPhoneNumber();
+        this.nip = newData.getNipNumber();
+        this.phone = newData.getPhoneNumber();
         this.emailAddress = newData.getEmailAddress();
         this.accountNumber = newData.getAccountNumber();
         this.peselNumber = newData.getPeselNumber();
