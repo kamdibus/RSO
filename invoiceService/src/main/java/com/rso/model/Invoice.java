@@ -1,6 +1,6 @@
 package com.rso.model;
 
-import com.rso.dto.InvoiceEntityDto;
+import com.rso.dto.InvoiceDto;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,12 +29,7 @@ public class Invoice {
 
     private String otherData;
 
-    // TODO: get rid of it
-    public Invoice(long id, final String data) {
-        this.id = id;
-    }
-
-    public Invoice(InvoiceEntityDto newInvoiceData) {
+    public Invoice(InvoiceDto newInvoiceData) {
         this.date = newInvoiceData.getDate();
         this.supplierId = newInvoiceData.getSupplierId();
         this.consumerId = newInvoiceData.getConsumerId();

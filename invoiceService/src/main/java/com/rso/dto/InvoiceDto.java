@@ -1,10 +1,14 @@
 package com.rso.dto;
+
 import lombok.Data;
+
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 @Data
-public class InvoiceEntityDto {
+public
+class InvoiceDto {
 
     private Long id;
     private SimpleDateFormat date;
@@ -13,5 +17,11 @@ public class InvoiceEntityDto {
     private Long amount;
     private String otherData;
 
-    public InvoiceEntityDto() {}
+    public InvoiceDto() {}
+}
+
+@Data
+public
+class InvoiceListDto {
+    private List<InvoiceDto> invoices;
 }
