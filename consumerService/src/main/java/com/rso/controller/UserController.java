@@ -49,7 +49,7 @@ public class UserController  {
         return userService.getPaymentsForUserId(userId, status);
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping(value = "")
     public ResponseEntity<?> saveNewUser(@RequestBody String requestBody) throws IOException {
         return userService.createNewUserAccount(requestBody);
     }
