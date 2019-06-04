@@ -29,7 +29,7 @@ const Row = withRouter(
   ({ data, columns, href, history }) => {
     return (
       <TableRow onClick={() => href && history.push(href)} hover={!!href}>
-        {columns.map(column => <TableCell key={column.name}>{data[column.name] || ''}</TableCell>)}
+        {columns.map(column => <TableCell key={column.name}>{data[column.name] != null ? data[column.name] : ''}</TableCell>)}
       </TableRow>
     )
   }

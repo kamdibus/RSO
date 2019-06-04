@@ -1,7 +1,7 @@
 export interface OfferPayload {
   discount: number;
   invoiceId: number;
-  userId: number;
+  supplierId: number;
   id?: number;
 }
 

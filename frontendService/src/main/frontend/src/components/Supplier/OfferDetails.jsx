@@ -6,6 +6,7 @@ import { LoadingOverlay } from '../common/Loading/Overlay';
 import { ActionSection } from '../Consumer/ActionSection';
 import { Snackbar } from '../common/Snackbar'
 import { SupplierService } from '../../backend/supplier/service/supplier';
+import { flattenObject } from '../../utils/object';
 
 export class OfferDetails extends React.Component {
   constructor(props) {
@@ -75,16 +76,6 @@ export class OfferDetails extends React.Component {
       this.snackbar.current.open(text)
     }
   } 
-}
-
-function flattenObject(obj) {
-  return Object.entries(obj)
-    .reduce((r, [key, value]) => {
-      if (typeof value === 'object') {
-        return { ...r, ...flattenObject(value) }
-      }
-      return { ...r, [key]: value }
-    }, {})
 }
 
 const OfferDetailsSection = styled(Details)`
