@@ -56,7 +56,12 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
             expirationDate,
             invoiceFilename,
             invoiceFileData,
-            invoiceId
+            invoiceId,
+            // invoiceName: '',
+            // invoiceData: '',
+            // supplier: '',
+            // consumer: '',
+            // amount: ''
           } = values
           SupplierService
             .uploadInvoice(invoiceFilename, invoiceFileData)
