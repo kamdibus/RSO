@@ -2,7 +2,6 @@ package com.rso;
 
 import com.rso.repository.InvoiceRepository;
 import com.rso.service.InvoiceService;
-import com.rso.util.DtoHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,9 +19,6 @@ public class InvoiceServiceTests {
 
     @Mock
     InvoiceRepository invoiceRepository;
-
-    @Mock
-    DtoHandler dtoHandler;
 
     @InjectMocks
     private InvoiceService invoiceService;

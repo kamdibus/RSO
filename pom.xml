@@ -40,6 +40,7 @@
         <spring.version>5.0.6.RELEASE</spring.version>
         <mapper.version>2.3.2</mapper.version>
         <auth0.version>1.13.3</auth0.version>
+        <json-smart.version>2.3</json-smart.version>
     </properties>
 
     <profiles>
@@ -287,6 +288,11 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>auth0</artifactId>
                 <version>${auth0.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.minidev</groupId>
+                <artifactId>json-smart</artifactId>
+                <version>${json-smart.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

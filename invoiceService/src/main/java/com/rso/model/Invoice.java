@@ -1,11 +1,11 @@
 package com.rso.model;
 
-import com.rso.dto.InvoiceDto;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.text.SimpleDateFormat;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.Date;
 
 @Document(collection = "invoices")
 @Data
@@ -17,9 +17,7 @@ public class Invoice {
     @Id
     private long id;
 
-    private String data;
-
-    private SimpleDateFormat date;
+    private Date date;
 
     private long supplierId;
 
@@ -28,14 +26,5 @@ public class Invoice {
     private long amount;
 
     private String otherData;
-
-    public Invoice(InvoiceDto newInvoiceData) {
-        this.date = newInvoiceData.getDate();
-        this.supplierId = newInvoiceData.getSupplierId();
-        this.consumerId = newInvoiceData.getConsumerId();
-        this.amount = newInvoiceData.getAmount();
-        this.otherData = newInvoiceData.getOtherData();
-    }
-    public Invoice() {}
 
 }
