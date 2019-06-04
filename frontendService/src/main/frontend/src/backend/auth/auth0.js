@@ -85,27 +85,30 @@ class Auth {
     }
     return { 'Authorization': `Bearer ${token}` };
   }
-
-    shareUserData = (authResult, url) => {
-        let metaDataUrl = this.auth0.domain + '/userInfo' + "?access_token=" + authResult.accessToken;
-        fetch(metaDataUrl, {
-            method: 'GET',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(data => fetch(
-                url, {
-                    method: 'POST',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data),
-                }
-            ))
-    };
+  
+  shareUserData = (authResult, url) => {
+    let metaDataUrl = 'https://' + this.auth0.baseOptions.domain + '/userInfo' + "?access_token=" + authResult.accessToken;
+    fetch(metaDataUrl, {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => fetch(
+      url,
+      {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+      }
+    ))
+  }
+}
 
 const auth0Client = new Auth();
 
