@@ -141,7 +141,9 @@ public class UserService {
         JSONObject userEntityDto = userData.getJSONObject("https://localhost:8080/user_metadata");
         UserEntityDto dto = mapper.readValue(userEntityDto.toString(), UserEntityDto.class);
         User newUser = this.dtoHandler.checkDtoEnumFields(dto);
-        this.saveUserInMongodb(newUser);
+        if (userRepository.findFirstByNip(newUser.getNip()) == null) {
+            this.saveUserInMongodb(newUser);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

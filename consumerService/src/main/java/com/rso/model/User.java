@@ -52,8 +52,8 @@ public class User {
     public User(UserEntityDto newData) {
         this.name = newData.getName();
         this.address = newData.getAddress();
-        this.nip = newData.getNipNumber();
-        this.phone = newData.getPhoneNumber();
+        this.nip = newData.getNip();
+        this.phone = newData.getPhone();
         this.emailAddress = newData.getEmailAddress();
         this.accountNumber = newData.getAccountNumber();
         this.peselNumber = newData.getPeselNumber();

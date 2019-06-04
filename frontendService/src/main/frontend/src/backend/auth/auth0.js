@@ -47,8 +47,8 @@ class Auth {
         if (!authResult || !authResult.idToken) {
           return reject(err);
         }
-        this.setSession(authResult);
-        resolve();
+        this.setSession(authResult)
+          .then(resolve)
       });
     })
   }
@@ -59,7 +59,7 @@ class Auth {
     this.accessToken = authResult.accessToken;
     // set the time that the id token will expire at
     this.expiresAt = authResult.idTokenPayload.exp * 1000;
-    this.shareUserData(authResult, USERS_URL);
+    return this.shareUserData(authResult, USERS_URL);
   }
 
   signOut() {
@@ -85,10 +85,9 @@ class Auth {
     }
     return { 'Authorization': `Bearer ${token}` };
   }
-
   shareUserData = (authResult, url) => {
     let metaDataUrl = 'https://' + this.auth0.baseOptions.domain + '/userInfo' + "?access_token=" + authResult.accessToken;
-    fetch(metaDataUrl, {
+    return fetch(metaDataUrl, {
       method: 'GET',
       credentials: 'same-origin',
       headers: {
