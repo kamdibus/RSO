@@ -1,7 +1,7 @@
 export interface OfferPayload {
   discount: number;
   invoiceId: number;
-  userId: number;
+  supplierId: number;
   id?: number;
 }
 
@@ -38,4 +38,10 @@ export enum OfferStatus {
   ACCEPTED = 'accepted',
   PENDING = 'pending',
   REJECTED = 'rejected'
+}
+
+export interface InvoicePayload {
+  amount: number;
+  otherData: string;
+  id?: number;
 }

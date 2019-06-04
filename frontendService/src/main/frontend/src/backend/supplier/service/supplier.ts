@@ -1,16 +1,16 @@
 import { delay } from "../../common/utils/delay";
 import { UploadResponse } from "../model/Upload";
-import { OfferResponse, OfferPayload, OfferHistoryResponse, OfferStatus } from "../model/Offer";
+import { OfferResponse, OfferPayload, OfferHistoryResponse, OfferStatus, InvoicePayload } from "../model/Offer";
 import Axios from 'axios';
 import { OFFERS_URL } from "../../../environment";
 import auth0Client from "../../auth/auth0";
 
 export const SupplierService = {
-  uploadInvoice: async function(fileName: string, fileData: File): Promise<UploadResponse> {
-    await delay(1000);
-    return {
-      id: 11
-    };
+  createInvoice: async function(invoice: InvoicePayload): Promise<InvoicePayload> {
+    const headers = auth0Client.getAuthHeaders()
+    return Axios
+      .post('/api/invoices/', invoice, { headers })
+      .then(r => r.data)
   },
   acceptOffer: async function(offerId: string) {
     return this.updateOffer(offerId, OfferStatus.ACCEPTED)

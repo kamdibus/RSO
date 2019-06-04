@@ -1,6 +1,8 @@
 import { User } from "../model/User";
 import { delay } from "../../common/utils/delay";
 import { HttpResponses, HttpResponse } from "../../common/model/HttpResponse";
+import Axios from "axios";
+import auth0Client from "../../auth/auth0";
 
 export const UserService = {
   getCurrentUser: async function(): Promise<User> {
@@ -26,24 +28,9 @@ export const UserService = {
     return HttpResponses.ok();
   },
   getUsers: async function(): Promise<User[]> {
-    await delay(1500);
-
-    return [
-      {
-        name: "User X",
-        nip: '1231231231',
-        id: 112
-      },
-      {
-        name: "User Y",
-        nip: '442',
-        id: 997
-      },
-      {
-        name: "User Z",
-        nip: '420',
-        id: 420
-      }
-    ]
+    const headers = auth0Client.getAuthHeaders();
+    return Axios
+      .get('/api/users/', { headers })
+      .then(r => r.data)
   }
 }

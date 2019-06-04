@@ -6,20 +6,37 @@ import { SupplierService } from '../../backend/supplier/service/supplier';
 import { LoadingOverlay } from '../common/Loading/Overlay';
 import { PrimaryButton } from '../common/Button';
 import { Snackbar } from '../common/Snackbar';
+import { Select, MenuItem, FormHelperText, FormControl } from '@material-ui/core';
+import { UserService } from '../../backend/user/service/user';
 
 export class OfferEdit extends React.Component {
   constructor(props) {
     super(props)
     this.snackbar = React.createRef()
+
+    this.state = {
+      users: []
+    }
+  }
+  componentDidMount() {
+    UserService
+      .getUsers()
+      .then(users => this.setState({ users }))
   }
   
   render() {
+    const { users } = this.state
+
     return (
       <Container>
         <Header>
         </Header>
         <FormContainer>
-          <OfferEditForm onSubmitSuccess={this.onOfferSubmit} onSubmitError={this.onOfferSubmitError} />
+          <OfferEditForm
+            onSubmitSuccess={this.onOfferSubmit}
+            onSubmitError={this.onOfferSubmitError}
+            users={users}
+          />
         </FormContainer>
         <Snackbar ref={this.snackbar} />
       </Container>
@@ -38,35 +55,28 @@ export class OfferEdit extends React.Component {
   } 
 }
 
-function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
+function OfferEditForm({ onSubmitSuccess, onSubmitError, users }) {
   return (
     <Formik
         initialValues={{
-          userId: '',
+          supplierId: '',
           discount: '',
           expirationDate: new Date(),
-          invoiceFilename: '',
-          invoiceFileData: null,
-          invoiceId: ''
+          invoiceData: '',
+          amount: ''
         }}
         onSubmit={(values, { setSubmitting }) => {
           const {
-            userId,
+            supplierId,
             discount,
             expirationDate,
-            invoiceFilename,
-            invoiceFileData,
-            invoiceId,
-            // invoiceName: '',
-            // invoiceData: '',
-            // supplier: '',
-            // consumer: '',
-            // amount: ''
+            invoiceData: otherData,
+            amount
           } = values
           SupplierService
-            .uploadInvoice(invoiceFilename, invoiceFileData)
+            .createInvoice({ amount: +amount, otherData })
             .then(({ id: invoiceId }) => SupplierService
-              .postOffer({ invoiceId, userId, discount })
+              .postOffer({ invoiceId, supplierId, discount })
               .then(res => {
                 setSubmitting(false)
                 onSubmitSuccess()
@@ -95,13 +105,37 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
         return (
           <Form onSubmit={handleSubmit}>
             {isSubmitting && <LoadingOverlay />}
-            <FormTextField
-              id='userId'
-              label="User id"
-              value={values.supplier}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
+            <FormControl
+                style={{
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  width: '45%',
+                  height: '48px',
+                  marginTop: '16px',
+                  marginBottom: '8px'
+                }}
+              >
+              <Select
+                inputProps={{
+                  id: 'supplierId'
+                }}
+                value={values.supplierId}
+                onChange={handleChange}
+                name='supplierId'
+                displayEmpty
+                style={{
+                  marginTop: '16px'
+                }}
+              >
+                <MenuItem value='' disabled>User</MenuItem>
+                {users.map(user => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>User</FormHelperText>
+            </FormControl>
             <FormTextField
               id='discount'
               label="Discount"
@@ -110,9 +144,16 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
               onBlur={handleBlur}
             />
             <FormTextField
-              id='invoiceId'
-              label="Invoice id"
-              value={values.nip}
+              id='invoiceData'
+              label="Invoice data"
+              value={values.invoiceData}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <FormTextField
+              id='amount'
+              label="Amount"
+              value={values.amount}
               onChange={handleChange}
               onBlur={handleBlur}
             />
@@ -120,21 +161,6 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError }) {
               value={values.expirationDate}
               onChange={date => setFieldValue('expirationDate', date)}
               label="Expiration date"
-            />
-            <FormField
-              type='file'
-              id='invoice'
-              label="Invoice [.pdf]"
-              onChange={e => {
-                  var file = e.target.files[0];
-                  var reader = new FileReader();
-                  setFieldValue("invoiceFilename", file.name);
-                  reader.onload = function(item) {
-                      setFieldValue("invoiceFileData",  item.target.result);
-                  };
-
-                  reader.readAsDataURL(file);
-              }}
             />
             <ActionRow>
               <PrimaryButton

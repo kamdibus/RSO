@@ -33,7 +33,8 @@ class Offers extends React.Component {
             { name: 'creationDate', label: "Creation date" },
             { name: 'expirationDate', label: "Expiration date" },
             { name: 'invoiceId', label: "Invoice id" },
-            { name: 'userId', label: "User id" },
+            { name: 'supplierId', label: "Supplier id" },
+            { name: 'consumerId', label: "Consumer id" },
           ]}
           rows={rows}
         />
