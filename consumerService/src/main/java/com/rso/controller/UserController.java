@@ -29,7 +29,7 @@ public class UserController  {
         return userService.getOffersForUserId(userId, status);
     }
 
-    @DeleteMapping(value = "/users/{userId}/offers")
+    @DeleteMapping(value = "/{userId}/offers")
     public ResponseEntity<?> removeOffersForUserId(@PathVariable long userId) {
         return userService.removeOffersForUserId(userId);
     }
@@ -57,6 +57,11 @@ public class UserController  {
     @GetMapping(value = "/test")
     public ResponseEntity<?> testMicroService() {
         return userService.testService();
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity<?> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }

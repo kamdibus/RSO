@@ -85,6 +85,7 @@ class Auth {
     }
     return { 'Authorization': `Bearer ${token}` };
   }
+  
   shareUserData = (authResult, url) => {
     let metaDataUrl = 'https://' + this.auth0.baseOptions.domain + '/userInfo' + "?access_token=" + authResult.accessToken;
     return fetch(metaDataUrl, {
