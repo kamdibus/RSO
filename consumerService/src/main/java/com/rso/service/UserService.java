@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @Component
@@ -154,5 +155,9 @@ public class UserService {
 
     public ResponseEntity<?> testService() {
         return new ResponseEntity<>("User service is working!", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getAllUsers() {
+        return new ResponseEntity(this.userRepository.findAll(), HttpStatus.OK);
     }
 }
