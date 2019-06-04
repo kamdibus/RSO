@@ -13,9 +13,9 @@ public class UserEntityDto {
 
     private String address;
 
-    private String nipNumber;
+    private String nip;
 
-    private String phoneNumber;
+    private String phone;
 
     private String emailAddress;
 
@@ -25,7 +25,7 @@ public class UserEntityDto {
 
     private SimpleDateFormat joinDate;
 
-    private String userType;
+    private String type;
 
     private String userStatus;
 

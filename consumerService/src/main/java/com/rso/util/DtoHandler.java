@@ -19,11 +19,8 @@ public class DtoHandler {
 
     public User checkDtoEnumFields(UserEntityDto userDto) {
         User newUser = new User(userDto);
-        String statusValue = userDto.getUserStatus();
-        String typeValue = userDto.getUserType();
+        String typeValue = userDto.getType();
         try {
-            UserStatus statusFromDto = UserStatus.valueOf(statusValue.toUpperCase());
-            newUser.setUserStatus(statusFromDto);
             UserType typeFromDto = UserType.valueOf(typeValue.toUpperCase());
             newUser.setType(typeFromDto);
         } catch (IllegalArgumentException | NullPointerException e) {
