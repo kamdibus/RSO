@@ -59,7 +59,7 @@ public class UserController  {
         return userService.testService();
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/")
     public ResponseEntity<?> getAllUsers() {
         return userService.getAllUsers();
     }
