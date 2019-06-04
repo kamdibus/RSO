@@ -9,5 +9,6 @@ public class InvoiceServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(InvoiceServiceApplication.class, args);
+		System.out.println("And the secret is: " + System.getenv("SECRET_PASSWORD"));
 	}
 }

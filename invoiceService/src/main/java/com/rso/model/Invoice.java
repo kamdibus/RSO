@@ -1,10 +1,11 @@
 package com.rso.model;
 
-import com.rso.dto.InvoiceEntityDto;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.Date;
 
 @Document(collection = "invoices")
 @Data
@@ -16,17 +17,14 @@ public class Invoice {
     @Id
     private long id;
 
-    private String data;
+    private Date date;
 
-    public Invoice(long id, final String data) {
-        this.id = id;
-        this.data = data;
-    }
+    private long supplierId;
 
-    public Invoice() {}
+    private long consumerId;
 
-    public Invoice(InvoiceEntityDto newData, long invoiceId) {
-        this.id = invoiceId;
-        this.data = newData.getData();
-    }
+    private long amount;
+
+    private String otherData;
+
 }
