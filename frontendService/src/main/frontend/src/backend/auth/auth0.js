@@ -95,17 +95,24 @@ class Auth {
       }
     })
     .then(response => response.json())
-    .then(data => fetch(
-      url,
-      {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-      }
-    ))
+    .then(data => {
+      /// metadata comes in weird key, which contains domain and other info
+      const [,metadata] = Object
+        .entries(data)
+        .find(([key]) => key.indexOf('metadata') >= 0)
+      this.userType = metadata.type.toLowerCase()
+      return fetch(
+        url,
+        {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+        }
+      )
+    })
   }
 }
 

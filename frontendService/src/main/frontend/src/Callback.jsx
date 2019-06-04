@@ -14,6 +14,10 @@ class Callback extends Component {
       else {
         redirectTo = query && query.redirect_to || '/'
       }
+      const userType = auth0Client.userType
+      if (redirectTo === '/' && userType) {
+        redirectTo = '/' + userType
+      }
 
       /// prevent page refresh related errors during authorization process
       if (redirectTo === '/callback') {
