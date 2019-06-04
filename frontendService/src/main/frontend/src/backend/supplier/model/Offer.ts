@@ -39,3 +39,9 @@ export enum OfferStatus {
   PENDING = 'pending',
   REJECTED = 'rejected'
 }
+
+export interface InvoicePayload {
+  amount: number;
+  otherData: string;
+  id?: number;
+}

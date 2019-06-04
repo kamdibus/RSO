@@ -62,26 +62,19 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError, users }) {
           supplierId: '',
           discount: '',
           expirationDate: new Date(),
-          invoiceFilename: '',
-          invoiceFileData: null,
-          invoiceId: '',
+          invoiceData: '',
+          amount: ''
         }}
         onSubmit={(values, { setSubmitting }) => {
           const {
             supplierId,
             discount,
             expirationDate,
-            invoiceFilename,
-            invoiceFileData,
-            invoiceId,
-            // invoiceName: '',
-            // invoiceData: '',
-            // supplier: '',
-            // consumer: '',
-            // amount: ''
+            invoiceData: otherData,
+            amount
           } = values
           SupplierService
-            .uploadInvoice(invoiceFilename, invoiceFileData)
+            .createInvoice({ amount: +amount, otherData })
             .then(({ id: invoiceId }) => SupplierService
               .postOffer({ invoiceId, supplierId, discount })
               .then(res => {
@@ -151,9 +144,16 @@ function OfferEditForm({ onSubmitSuccess, onSubmitError, users }) {
               onBlur={handleBlur}
             />
             <FormTextField
-              id='invoiceId'
-              label="Invoice id"
-              value={values.invoiceId}
+              id='invoiceData'
+              label="Invoice data"
+              value={values.invoiceData}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <FormTextField
+              id='amount'
+              label="Amount"
+              value={values.amount}
               onChange={handleChange}
               onBlur={handleBlur}
             />

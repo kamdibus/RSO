@@ -32,24 +32,5 @@ export const UserService = {
     return Axios
       .get('/api/users/', { headers })
       .then(r => r.data)
-    // await delay(1500);
-
-    // return [
-    //   {
-    //     name: "User X",
-    //     nip: '1231231231',
-    //     id: 112
-    //   },
-    //   {
-    //     name: "User Y",
-    //     nip: '442',
-    //     id: 997
-    //   },
-    //   {
-    //     name: "User Z",
-    //     nip: '420',
-    //     id: 420
-    //   }
-    // ]
   }
 }
