@@ -17,7 +17,7 @@
 
         <javax.activation.version>1.1.1</javax.activation.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <spring-test.version>5.0.7.RELEASE</spring-test.version>
         <spring-boot-test.version>2.0.3.RELEASE</spring-boot-test.version>
         <h2.version>1.4.194</h2.version>
