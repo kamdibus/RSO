@@ -20,7 +20,7 @@
         <junit.version>4.12</junit.version>
         <spring-test.version>5.0.7.RELEASE</spring-test.version>
         <spring-boot-test.version>2.0.3.RELEASE</spring-boot-test.version>
-        <h2.version>1.4.194</h2.version>
+        <h2.version>2.1.210</h2.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <lombok.version>1.18.6</lombok.version>
         <webjarsBootstrap.version>3.3.7</webjarsBootstrap.version>
