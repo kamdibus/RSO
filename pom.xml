@@ -40,7 +40,7 @@
         <spring.version>5.0.6.RELEASE</spring.version>
         <mapper.version>2.3.2</mapper.version>
         <auth0.version>1.13.3</auth0.version>
-        <json-smart.version>2.3</json-smart.version>
+        <json-smart.version>2.4.5</json-smart.version>
     </properties>
 
     <profiles>
