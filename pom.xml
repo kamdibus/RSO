@@ -24,7 +24,7 @@
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <lombok.version>1.18.6</lombok.version>
         <webjarsBootstrap.version>3.3.7</webjarsBootstrap.version>
-        <spring-boot-starter.version>2.1.3.RELEASE</spring-boot-starter.version>
+        <spring-boot-starter.version>2.5.12</spring-boot-starter.version>
         <dockerfile-plugin.version>1.3.6</dockerfile-plugin.version>
         <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
